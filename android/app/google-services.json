@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "895409070428",
+    "project_id": "proyecto-final-seminario-cc821",
+    "storage_bucket": "proyecto-final-seminario-cc821.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:895409070428:android:16feab5cfd664cc587e199",
+        "android_client_info": {
+          "package_name": "app.seminario.proyecto_final_seminario"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "895409070428-lfab2sss8fbhjn9n59h9euhmidkvo50d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCtG98szLafeTcaLWXwHTG0-TqCAxPC9KE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "895409070428-lfab2sss8fbhjn9n59h9euhmidkvo50d.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "895409070428-cmehd9o4jv1neu95pugp28l2i9kufcqk.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "app.seminario.proyectoFinalSeminario"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:895409070428:android:3f9159d9d06682b687e199",
+        "android_client_info": {
+          "package_name": "app.seminario.proyecto_final_seminario_restaurante"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "895409070428-lfab2sss8fbhjn9n59h9euhmidkvo50d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCtG98szLafeTcaLWXwHTG0-TqCAxPC9KE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "895409070428-lfab2sss8fbhjn9n59h9euhmidkvo50d.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "895409070428-cmehd9o4jv1neu95pugp28l2i9kufcqk.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "app.seminario.proyectoFinalSeminario"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
