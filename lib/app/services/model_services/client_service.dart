@@ -1,28 +1,27 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:proyecto_final_seminario_restaurante/app/models/restaurant_model.dart';
 import 'package:proyecto_final_seminario_restaurante/app/services/services.dart';
 import 'package:proyecto_final_seminario_restaurante/app/utils/utils.dart';
-import '../../models/models.dart';
-import '../../models/client_model.dart';
 import '../firebase_services/database_service.dart';
 
-class ClientService {
+class RestaurantService {
   static String usersReference = firebaseReferences.clients;
   static String addressReference = firebaseReferences.addresses;
 
-  static final ClientService _instance = ClientService._internal();
+  static final RestaurantService _instance = RestaurantService._internal();
 
-  factory ClientService() {
+  factory RestaurantService() {
     return _instance;
   }
 
-  ClientService._internal();
+  RestaurantService._internal();
   var firestore = FirebaseFirestore.instance;
 
   //Para paginacion
   DocumentSnapshot? lastDocument;
 
   Future<bool> save({
-    required Client user,
+    required Restaurant user,
     required String customId,
     required Address address,
   }) async {
@@ -58,7 +57,7 @@ class ClientService {
     }
   }
 
-  Future<bool> delete(Client user) async {
+  Future<bool> delete(Restaurant user) async {
     try {
       await database.deleteDocument(user.id, usersReference);
       return true;
@@ -68,7 +67,7 @@ class ClientService {
     }
   }
 
-  Future<bool> update(Client user) async {
+  Future<bool> update(Restaurant user) async {
     try {
       DocumentReference _docRef = database.getDocumentReference(
         collection: usersReference,
@@ -258,7 +257,7 @@ class ClientService {
     return null;
   }
 
-  Future<List<Client>> getNextPaginated(
+  Future<List<Restaurant>> getNextPaginated(
     int paginationNum,
     String filterPropery,
     dynamic filterValue,
@@ -284,7 +283,7 @@ class ClientService {
     lastDocument = null;
   }
 
-  Future<Client?> getUserDocumentById(
+  Future<Restaurant?> getUserDocumentById(
     String documentId,
   ) async {
     var _querySnapshot = await database.getDocument(
@@ -294,13 +293,13 @@ class ClientService {
 
     if (!_querySnapshot.exists) return null;
 
-    return Client.fromJson(
+    return Restaurant.fromJson(
       _querySnapshot.data() as Map<String, dynamic>,
     );
   }
 
   /// Gets an user by phone number
-  Future<Client?> getUserDocumentByPhoneNumber(
+  Future<Restaurant?> getUserDocumentByPhoneNumber(
     String phoneNumber,
   ) async {
     dynamic userJson;
@@ -316,12 +315,12 @@ class ClientService {
     for (var user in _querySnapshot.docs) {
       userJson = user.data();
     }
-    return Client.fromJson(
+    return Restaurant.fromJson(
       userJson as Map<String, dynamic>,
     );
   }
 
-  Future<Client?> getCurrentUser() async {
+  Future<Restaurant?> getCurrentUser() async {
     var currentFirebaseUser = auth.getCurrentUser();
     print(currentFirebaseUser!.uid);
     var user = await getUserDocumentById(
@@ -331,4 +330,4 @@ class ClientService {
   }
 }
 
-ClientService clientService = ClientService();
+RestaurantService restaurantService = RestaurantService();

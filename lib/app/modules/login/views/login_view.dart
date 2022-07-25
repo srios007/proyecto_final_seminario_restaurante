@@ -11,73 +11,70 @@ class LoginView extends GetView<LoginController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Palette.white,
       appBar: AppBar(
-        backgroundColor: Palette.yellow,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios),
-          onPressed: Get.back,
-        ),
+        backgroundColor: Palette.white,
+        automaticallyImplyLeading: false,
       ),
-      body: SizedBox(
-        width: Get.width,
-        height: Get.height -
-            kToolbarHeight -
-            MediaQuery.of(Get.context!).padding.top,
-        child: Form(
-          key: controller.formKeyLogin,
-          child: SingleChildScrollView(
-            physics: const ClampingScrollPhysics(),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                // Logo and message
-
-                const SizedBox(height: 50),
-                RichText(
-                  textAlign: TextAlign.center,
-                  text: const TextSpan(
-                    text: 'Inicia sesión y disfruta\nla experiencia ',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.w700,
-                      color: Palette.darkBlue,
-                    ),
-                    children: <TextSpan>[
-                      TextSpan(
-                        text: 'lizit',
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.w900,
-                          color: Palette.darkBlue,
-                        ),
+      body: CustomScrollView(
+        physics: const ClampingScrollPhysics(),
+        slivers: [
+          SliverFillRemaining(
+            hasScrollBody: false,
+            child: Form(
+              key: controller.formKeyLogin,
+              child: Column(
+                children: [
+                  const Spacer(),
+                  RichText(
+                    textAlign: TextAlign.center,
+                    text: const TextSpan(
+                      text: 'Inicia sesión y\ndisfruta de ',
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.w700,
+                        color: Palette.darkBlue,
                       ),
-                    ],
+                      children: <TextSpan>[
+                        TextSpan(
+                          text: 'RondApp',
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.w900,
+                            color: Palette.darkBlue,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                const SizedBox(height: 40),
-                EmailInput(
-                  hintText: 'Correo',
-                  textEditingController: controller.emailController,
-                ),
-                const SizedBox(height: 20),
-                _PasswordInput(controller: controller),
-                const SizedBox(height: 50),
-                // Login button
-                YellowButton(
-                  buttonText: 'Iniciar',
-                  isLoading: controller.isLoading,
-                  onPressed: controller.login,
-                  width: 175,
-                ),
-                const SizedBox(height: 30),
-                _ForgotUser(controller: controller),
-                _ForgotPassword(controller: controller),
-                const SizedBox(height: 15),
-              ],
+                  const Spacer(),
+
+                  const SizedBox(height: 40),
+                  EmailInput(
+                    hintText: 'Correo',
+                    textEditingController: controller.emailController,
+                  ),
+                  const SizedBox(height: 20),
+                  _PasswordInput(controller: controller),
+                  const SizedBox(height: 50),
+                  // Login button
+                  PurpleButton(
+                    buttonText: 'Iniciar sesión',
+                    isLoading: controller.isLoading,
+                    onPressed: controller.login,
+                    // width: 175,
+                  ),
+                  const Spacer(),
+
+                  const SizedBox(height: 30),
+                  _ForgotUser(controller: controller),
+                  _ForgotPassword(controller: controller),
+                  const Spacer(),
+                ],
+              ),
             ),
-          ),
-        ),
+          )
+        ],
       ),
     );
   }

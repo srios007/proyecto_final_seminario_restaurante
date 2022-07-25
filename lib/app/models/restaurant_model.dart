@@ -1,25 +1,27 @@
 import 'package:get/get.dart';
 
-class Client {
+class Restaurant {
   String? id;
   DateTime? created;
   String? profilePictureUrl;
   ContactInfo? contactInfo;
   String? userType;
   String? password;
+  String? restaurantName;
   List<BankAccount> bankAccounts = [];
   List<Address> addresses = [];
 
-  Client({
+  Restaurant({
     this.id,
     this.created,
     this.profilePictureUrl,
     this.contactInfo,
     this.userType,
     this.password,
+    this.restaurantName,
   });
 
-  Client.fromJson(Map<String, dynamic> json) {
+  Restaurant.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     created = json["created"].toDate();
     profilePictureUrl = json['profilePictureUrl'];
@@ -27,6 +29,7 @@ class Client {
         ? ContactInfo?.fromJson(json['contactInfo'])
         : null;
     userType = json['userType'];
+    restaurantName = json['restaurantName'];
   }
 
   Map<String, dynamic> toJson() {
@@ -38,6 +41,7 @@ class Client {
       data['contactInfo'] = contactInfo?.toJson();
     }
     data['userType'] = userType;
+    data['restaurantName'] = restaurantName;
     return data;
   }
 }

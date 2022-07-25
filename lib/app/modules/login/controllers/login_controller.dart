@@ -6,15 +6,16 @@ import 'package:proyecto_final_seminario_restaurante/app/routes/app_pages.dart';
 import 'package:proyecto_final_seminario_restaurante/app/services/services.dart';
 import 'package:proyecto_final_seminario_restaurante/app/widgets/widgets.dart';
 
-class LoginController extends GetxController {
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-  final box = GetStorage();
+import '../../../models/restaurant_model.dart';
 
-  final visiblePassword = false.obs;
+class LoginController extends GetxController {
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
   final formKeyLogin = GlobalKey<FormState>();
-  Client user = Client();
+  final visiblePassword = false.obs;
   RxBool isLoading = false.obs;
+  final box = GetStorage();
+  Restaurant user = Restaurant();
 
   void showPassword() {
     visiblePassword.value
@@ -35,16 +36,15 @@ class LoginController extends GetxController {
   login() async {
     if (formKeyLogin.currentState!.validate()) {
       isLoading.value = true;
-
       try {
         final response = await auth.signIn(
             email: emailController.text.trim(),
             password: passwordController.text);
         if (response is! String) {
-          user = (await clientService.getCurrentUser())!;
+          user = (await restaurantService.getCurrentUser())!;
           // registerDecive(user.id!);
           // user.pushNotificationsToken = box.read('pushToken');
-          clientService.update(user);
+          restaurantService.update(user);
           isLoading.value = false;
           Get.offAllNamed(Routes.HOME, arguments: {'user': user});
         } else {
