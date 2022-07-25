@@ -2,8 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:proyecto_final_seminario_restaurante/app/utils/utils.dart';
 import 'package:proyecto_final_seminario_restaurante/app/widgets/widgets.dart';
-import '../model_services/user_service.dart';
-import '../../models/user_model.dart' as projectUser;
+import '../model_services/client_service.dart';
+import '../../models/client_model.dart' as projectUser;
 import 'database_service.dart';
 
 class AuthService {
@@ -214,11 +214,11 @@ class AuthService {
     }
   }
 
-  Future<projectUser.User?> getCurrentUserHome() async {
+  Future<projectUser.Client?> getCurrentUserHome() async {
     await connectionStatus.getNormalStatus();
 
     try {
-      return (await userService.getCurrentUser())!;
+      return (await clientService.getCurrentUser())!;
     } on FirebaseAuthException catch (e) {
       debugPrint(e.toString());
     }

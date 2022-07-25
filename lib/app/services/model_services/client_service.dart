@@ -2,27 +2,27 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:proyecto_final_seminario_restaurante/app/services/services.dart';
 import 'package:proyecto_final_seminario_restaurante/app/utils/utils.dart';
 import '../../models/models.dart';
-import '../../models/user_model.dart';
+import '../../models/client_model.dart';
 import '../firebase_services/database_service.dart';
 
-class UserService {
-  static String usersReference = firebaseReferences.users;
+class ClientService {
+  static String usersReference = firebaseReferences.clients;
   static String addressReference = firebaseReferences.addresses;
 
-  static final UserService _instance = UserService._internal();
+  static final ClientService _instance = ClientService._internal();
 
-  factory UserService() {
+  factory ClientService() {
     return _instance;
   }
 
-  UserService._internal();
+  ClientService._internal();
   var firestore = FirebaseFirestore.instance;
 
   //Para paginacion
   DocumentSnapshot? lastDocument;
 
   Future<bool> save({
-    required User user,
+    required Client user,
     required String customId,
     required Address address,
   }) async {
@@ -58,7 +58,7 @@ class UserService {
     }
   }
 
-  Future<bool> delete(User user) async {
+  Future<bool> delete(Client user) async {
     try {
       await database.deleteDocument(user.id, usersReference);
       return true;
@@ -68,7 +68,7 @@ class UserService {
     }
   }
 
-  Future<bool> update(User user) async {
+  Future<bool> update(Client user) async {
     try {
       DocumentReference _docRef = database.getDocumentReference(
         collection: usersReference,
@@ -90,7 +90,7 @@ class UserService {
   }) async {
     try {
       await database.saveDocumentInSubcollection(
-        collection: firebaseReferences.users,
+        collection: firebaseReferences.clients,
         subcollection: firebaseReferences.bankAccounts,
         documentId: documentId,
         subcollectionData: bankAccount.toJson(),
@@ -110,7 +110,7 @@ class UserService {
     try {
       await database.deleteDocumentFromSubcollection(
         collectionDocumentId,
-        firebaseReferences.users,
+        firebaseReferences.clients,
         subcollectionDocumentId,
         firebaseReferences.bankAccounts,
       );
@@ -129,7 +129,7 @@ class UserService {
     try {
       var subcollection = await database.getSubcollectionFromDocument(
           documentId,
-          firebaseReferences.users,
+          firebaseReferences.clients,
           firebaseReferences.bankAccounts);
 
       for (var bankAccountDoc in subcollection.docs) {
@@ -151,7 +151,7 @@ class UserService {
   }) async {
     try {
       await database.saveDocumentInSubcollection(
-        collection: firebaseReferences.users,
+        collection: firebaseReferences.clients,
         subcollection: firebaseReferences.creditCards,
         documentId: documentId,
         subcollectionData: creditCard.toJson(),
@@ -171,7 +171,7 @@ class UserService {
     try {
       await database.deleteDocumentFromSubcollection(
         collectionDocumentId,
-        firebaseReferences.users,
+        firebaseReferences.clients,
         subcollectionDocumentId,
         firebaseReferences.creditCards,
       );
@@ -189,7 +189,9 @@ class UserService {
     List<CreditCard> list = [];
     try {
       var subcollection = await database.getSubcollectionFromDocument(
-          documentId, firebaseReferences.users, firebaseReferences.creditCards);
+          documentId,
+          firebaseReferences.clients,
+          firebaseReferences.creditCards);
 
       for (var creditCardDoc in subcollection.docs) {
         var newCreditCard = CreditCard.fromJson(creditCardDoc.data());
@@ -209,36 +211,12 @@ class UserService {
     List<Address> list = [];
     try {
       var subcollection = await database.getSubcollectionFromDocument(
-          documentId, firebaseReferences.users, firebaseReferences.addresses);
+          documentId, firebaseReferences.clients, firebaseReferences.addresses);
 
       for (var addressDoc in subcollection.docs) {
         var address = Address.fromJson(addressDoc.data());
         address.id = addressDoc.id;
         list.add(address);
-      }
-      return list;
-    } on Exception catch (e) {
-      print(e);
-      return list;
-    }
-  }
-
-  
-
-  
-
-  Future<List<Truora>> getUserTruora({
-    required String documentId,
-  }) async {
-    List<Truora> list = [];
-    try {
-      var subcollection = await database.getSubcollectionFromDocument(
-          documentId, firebaseReferences.users, firebaseReferences.truora);
-
-      for (var truoraDoc in subcollection.docs) {
-        var infoTruora = Truora.fromJson(truoraDoc.data());
-        infoTruora.id = truoraDoc.id;
-        list.add(infoTruora);
       }
       return list;
     } on Exception catch (e) {
@@ -280,7 +258,7 @@ class UserService {
     return null;
   }
 
-  Future<List<User>> getNextPaginated(
+  Future<List<Client>> getNextPaginated(
     int paginationNum,
     String filterPropery,
     dynamic filterValue,
@@ -306,7 +284,7 @@ class UserService {
     lastDocument = null;
   }
 
-  Future<User?> getUserDocumentById(
+  Future<Client?> getUserDocumentById(
     String documentId,
   ) async {
     var _querySnapshot = await database.getDocument(
@@ -316,13 +294,13 @@ class UserService {
 
     if (!_querySnapshot.exists) return null;
 
-    return User.fromJson(
+    return Client.fromJson(
       _querySnapshot.data() as Map<String, dynamic>,
     );
   }
 
   /// Gets an user by phone number
-  Future<User?> getUserDocumentByPhoneNumber(
+  Future<Client?> getUserDocumentByPhoneNumber(
     String phoneNumber,
   ) async {
     dynamic userJson;
@@ -338,12 +316,12 @@ class UserService {
     for (var user in _querySnapshot.docs) {
       userJson = user.data();
     }
-    return User.fromJson(
+    return Client.fromJson(
       userJson as Map<String, dynamic>,
     );
   }
 
-  Future<User?> getCurrentUser() async {
+  Future<Client?> getCurrentUser() async {
     var currentFirebaseUser = auth.getCurrentUser();
     print(currentFirebaseUser!.uid);
     var user = await getUserDocumentById(
@@ -353,4 +331,4 @@ class UserService {
   }
 }
 
-UserService userService = UserService();
+ClientService clientService = ClientService();

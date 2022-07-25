@@ -15,11 +15,6 @@ class Palette {
   static const lightGray = Color(0xFFB1B1B1);
   static const black = Color(0xFF000000);
   static const red = Color(0xFFEB4335);
-
-  // Tracking colors
-  static const state1 = Color(0xFFDCDFF0);
-  static const state2 = Color(0xFFFEF0D0);
-  static const state3 = Color(0xFFDAF0F6);
   
 
 }
