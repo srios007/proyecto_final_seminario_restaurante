@@ -1,11 +1,9 @@
+import 'package:proyecto_final_seminario_restaurante/app/modules/login/controllers/login_controller.dart';
+import 'package:proyecto_final_seminario_restaurante/app/widgets/widgets.dart';
+import 'package:proyecto_final_seminario_restaurante/app/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
-import 'package:proyecto_final_seminario_restaurante/app/utils/utils.dart';
-import 'package:proyecto_final_seminario_restaurante/app/widgets/widgets.dart';
-
-import '../controllers/login_controller.dart';
 
 class LoginView extends GetView<LoginController> {
   @override
@@ -47,8 +45,7 @@ class LoginView extends GetView<LoginController> {
                       ],
                     ),
                   ),
-                  const Spacer(),
-
+                  const Spacer(flex: 2),
                   const SizedBox(height: 40),
                   EmailInput(
                     hintText: 'Correo',
@@ -57,15 +54,14 @@ class LoginView extends GetView<LoginController> {
                   const SizedBox(height: 20),
                   _PasswordInput(controller: controller),
                   const SizedBox(height: 50),
-                  // Login button
                   PurpleButton(
                     buttonText: 'Iniciar sesión',
                     isLoading: controller.isLoading,
                     onPressed: controller.login,
-                    // width: 175,
                   ),
                   const Spacer(),
-
+                  const SizedBox(height: 30),
+                  _CreateAccount(controller: controller),
                   const SizedBox(height: 30),
                   _ForgotUser(controller: controller),
                   _ForgotPassword(controller: controller),
@@ -90,38 +86,39 @@ class _PasswordInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() => SizedBox(
-          width: MediaQuery.of(context).size.width - 100,
-          child: TextFormField(
-            decoration: InputDecoration(
-              hintText: 'Contraseña',
-              hintStyle: styles.hintTextStyle,
-              errorStyle: styles.errorStyle,
-              enabledBorder: styles.borderTextField,
-              focusedBorder: styles.borderTextField,
-              errorBorder: styles.borderTextField,
-              focusedErrorBorder: styles.borderTextField,
-              suffixIcon: IconButton(
-                onPressed: controller.showPassword,
-                icon: controller.visiblePassword.value
-                    ? const Icon(CupertinoIcons.eye, color: Palette.darkBlue)
-                    : const Icon(CupertinoIcons.eye_slash,
-                        color: Palette.darkBlue),
-              ),
+    return Obx(
+      () => SizedBox(
+        width: MediaQuery.of(context).size.width - 100,
+        child: TextFormField(
+          decoration: InputDecoration(
+            hintText: 'Contraseña',
+            hintStyle: styles.hintTextStyle,
+            errorStyle: styles.errorStyle,
+            enabledBorder: styles.borderTextField,
+            focusedBorder: styles.borderTextField,
+            errorBorder: styles.borderTextField,
+            focusedErrorBorder: styles.borderTextField,
+            suffixIcon: IconButton(
+              onPressed: controller.showPassword,
+              icon: controller.visiblePassword.value
+                  ? const Icon(CupertinoIcons.eye, color: Palette.darkBlue)
+                  : const Icon(CupertinoIcons.eye_slash,
+                      color: Palette.darkBlue),
             ),
-            validator: controller.validatePassword,
-            controller: controller.passwordController,
-            obscureText: !controller.visiblePassword.value,
           ),
-        ));
+          validator: controller.validatePassword,
+          controller: controller.passwordController,
+          obscureText: !controller.visiblePassword.value,
+        ),
+      ),
+    );
   }
 }
 
 class _ForgotUser extends StatelessWidget {
   const _ForgotUser({
-    Key? key,
     required this.controller,
-  }) : super(key: key);
+  });
 
   final LoginController controller;
 
@@ -149,9 +146,8 @@ class _ForgotUser extends StatelessWidget {
 
 class _ForgotPassword extends StatelessWidget {
   const _ForgotPassword({
-    Key? key,
     required this.controller,
-  }) : super(key: key);
+  });
 
   final LoginController controller;
 
@@ -166,6 +162,35 @@ class _ForgotPassword extends StatelessWidget {
         ),
         child: const Text(
           '¿Olvidaste tu contraseña?',
+          style: TextStyle(
+            color: Palette.purple,
+            fontSize: 18,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _CreateAccount extends StatelessWidget {
+  const _CreateAccount({
+    required this.controller,
+  });
+
+  final LoginController controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 40,
+      child: TextButton(
+        onPressed: controller.createAccount,
+        style: TextButton.styleFrom(
+          primary: Palette.white,
+        ),
+        child: const Text(
+          '¿No tienes una cuenta?, inicia sesión',
           style: TextStyle(
             color: Palette.purple,
             fontSize: 18,
