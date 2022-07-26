@@ -52,7 +52,7 @@ class NormalInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 32),
+      margin: const EdgeInsets.fromLTRB(32, 0, 40, 0),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -68,8 +68,8 @@ class NormalInput extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 10),
-          Container(
-            width: Get.width - 81,
+          SizedBox(
+            width: Get.width - 100,
             child: TextFormField(
               obscureText: obscureText,
               textCapitalization: textCapitalization ?? TextCapitalization.none,
@@ -94,8 +94,10 @@ class NormalInput extends StatelessWidget {
                         onPressed: showPasswordAction,
                         icon: showIcon! || showPassword!.value
                             ? iconToShow!
-                            : const Icon(CupertinoIcons.eye_slash,
-                                color: Palette.darkBlue),
+                            : const Icon(
+                                CupertinoIcons.eye_slash,
+                                color: Palette.darkBlue,
+                              ),
                       )
                     : const SizedBox.shrink(),
               ),

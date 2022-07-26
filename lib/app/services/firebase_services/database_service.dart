@@ -104,9 +104,8 @@ class Database {
   /// Guarda un documento dentro de una coleccion
   bool saveDevice(Map<String, dynamic> document, String collection) {
     try {
-
       if (document['id'] != null) {
-        firestore.collection(collection).doc(document['id'] ).set(document);
+        firestore.collection(collection).doc(document['id']).set(document);
         return true;
       } else {
         String id = createId(collection);
@@ -583,11 +582,8 @@ class Database {
   /// Guarda un documento dentro de una coleccion con un id custom
   Future<bool> saveUserWithCustomIdAndSubcollection(
     Map<String, dynamic> object,
-    Map<String, dynamic> subcollectionData,
     String collection,
-    String subCollection,
     String customId,
-    Map<String, dynamic> addressData,
   ) async {
     try {
       CollectionReference collRef = firestore.collection(collection);
@@ -597,18 +593,6 @@ class Database {
           .collection(collection)
           .doc(docReferance.id)
           .set({...object});
-
-      await firestore
-          .collection(collection)
-          .doc(docReferance.id)
-          .collection(subCollection)
-          .add(subcollectionData);
-
-      await firestore
-          .collection(collection)
-          .doc(docReferance.id)
-          .collection(firebaseReferences.addresses)
-          .add(addressData);
 
       return true;
     } on Exception catch (e) {
@@ -640,11 +624,6 @@ class Database {
     }
   }
 
- 
-
-  
-
-  
   /// Guarda un documento dentro de una subcoleccion dado un ID
   Future<bool> saveDocumentInSubcollection({
     required String documentId,

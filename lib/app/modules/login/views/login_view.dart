@@ -190,7 +190,7 @@ class _CreateAccount extends StatelessWidget {
           primary: Palette.white,
         ),
         child: const Text(
-          '¿No tienes una cuenta?, inicia sesión',
+          '¿No tienes una cuenta?, regístrate',
           style: TextStyle(
             color: Palette.purple,
             fontSize: 18,
