@@ -48,7 +48,7 @@ class LoginController extends GetxController {
           isLoading.value = false;
         }
       } catch (e) {
-        e.toString();
+        print(e.toString());
       }
     }
   }

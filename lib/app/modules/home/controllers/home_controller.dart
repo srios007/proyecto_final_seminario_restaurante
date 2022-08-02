@@ -1,23 +1,19 @@
 import 'package:get/get.dart';
+import 'package:proyecto_final_seminario_restaurante/app/models/restaurant_model.dart';
+import 'package:proyecto_final_seminario_restaurante/app/services/services.dart';
 
 class HomeController extends GetxController {
-  //TODO: Implement HomeController
-
-  final count = 0.obs;
+  Restaurant restaurant = Restaurant();
+  RxBool isLoading = false.obs;
   @override
   void onInit() {
+    getUser();
     super.onInit();
   }
 
-  @override
-  void onReady() {
-    super.onReady();
+  getUser() async {
+    isLoading.value = true;
+    restaurant = (await restaurantService.getCurrentUser())!;
+    isLoading.value = false;
   }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  void increment() => count.value++;
 }

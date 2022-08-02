@@ -16,7 +16,7 @@ class CustomDrawer extends StatelessWidget {
     return Drawer(
       elevation: 20,
       child: Container(
-        color: Palette.darkBlue,
+        color: Palette.purple.withOpacity(0.9),
         child: ListView(
           physics: const ClampingScrollPhysics(),
           padding: EdgeInsets.zero,
@@ -25,7 +25,10 @@ class CustomDrawer extends StatelessWidget {
             _DrawerTile(
               textColor: Palette.white,
               label: 'Perfil',
-              onTap: () {},
+              onTap: () {
+                Get.back();
+                Get.toNamed(Routes.PROFILE);
+              },
             ),
             _DrawerTile(
               textColor: Palette.white,
@@ -52,29 +55,42 @@ class _LogoHeader extends StatelessWidget {
     return DrawerHeader(
       margin: EdgeInsets.zero,
       padding: EdgeInsets.zero,
-      child: Container(
-        padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 8.0),
-        child: Padding(
-          padding: const EdgeInsets.only(left: 65),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Expanded(child: SizedBox()),
-              Align(
-                alignment: Alignment.topRight,
-                child: CupertinoButton(
-                  padding: EdgeInsets.zero,
-                  onPressed: Get.back,
-                  child: const Icon(
-                    Icons.close,
-                    size: 36,
-                    color: Palette.white,
-                  ),
-                ),
+      child: Stack(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(right: 20),
+            child: Center(
+              child: Text(
+                'RondApp',
+                style: styles.tittleDrawer,
               ),
-            ],
+            ),
           ),
-        ),
+          Container(
+            padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 8.0),
+            child: Padding(
+              padding: const EdgeInsets.only(left: 65),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Expanded(child: SizedBox()),
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: CupertinoButton(
+                      padding: EdgeInsets.zero,
+                      onPressed: Get.back,
+                      child: const Icon(
+                        Icons.close,
+                        size: 36,
+                        color: Palette.white,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

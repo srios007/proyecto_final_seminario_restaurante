@@ -13,6 +13,12 @@ class Styles {
     fontWeight: FontWeight.bold,
   );
 
+  TextStyle tittleDrawer = const TextStyle(
+    color: Palette.white,
+    fontSize: 32.0,
+    fontWeight: FontWeight.bold,
+  );
+
   TextStyle subtittleRegister = const TextStyle(
     color: Palette.darkBlue,
     fontSize: 20.0,
@@ -33,6 +39,11 @@ class Styles {
   TextStyle hintTextStyleRegister = const TextStyle(
     color: Palette.darkBlue,
     fontSize: 18,
+    fontWeight: FontWeight.w300,
+  );
+  TextStyle profileLabelStyle = const TextStyle(
+    color: Palette.darkBlue,
+    fontSize: 15,
     fontWeight: FontWeight.w300,
   );
   TextStyle errorStyle = const TextStyle(
@@ -74,6 +85,12 @@ class Styles {
   TextStyle titleOffer = const TextStyle(
     fontWeight: FontWeight.w700,
     fontSize: 24,
+    color: Palette.darkBlue,
+  );
+
+  TextStyle nameProfile = const TextStyle(
+    fontWeight: FontWeight.w500,
+    fontSize: 20,
     color: Palette.darkBlue,
   );
   TextStyle titleOfferCard = const TextStyle(

@@ -69,8 +69,9 @@ class RestaurantService {
   Future<Restaurant?> getUserDocumentById(
     String documentId,
   ) async {
+    print(documentId);
     var querySnapshot = await database.getDocument(
-      collection: 'users',
+      collection: 'restaurants',
       documentId: documentId,
     );
 
@@ -102,7 +103,7 @@ class RestaurantService {
 
   Future<Restaurant?> getCurrentUser() async {
     var currentFirebaseUser = auth.getCurrentUser();
-    debugPrint(currentFirebaseUser!.uid);
+    debugPrint('UID: ${currentFirebaseUser!.uid}');
     var user = await getUserDocumentById(
       currentFirebaseUser.uid,
     );
