@@ -33,15 +33,21 @@ class PurpleButton extends StatelessWidget {
   Widget build(BuildContext context) {
     iconStart ??= false;
     return Obx(
-      () => Container(
+      () => SizedBox(
         width: width ?? 260,
         height: height ?? 55,
         child: MaterialButton(
+          color: color ?? Palette.purple,
+          elevation: 1,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(borderRadius ?? 60)),
+          ),
+          onPressed: isLoading.value ? () {} : onPressed,
           child: isLoading.value
-              ? Container(
+              ? const SizedBox(
                   height: 20,
                   width: 20,
-                  child: const Center(
+                  child: Center(
                     child: CircularProgressIndicator(
                       color: Palette.white,
                     ),
@@ -81,12 +87,6 @@ class PurpleButton extends StatelessWidget {
                       ),
                       textAlign: TextAlign.center,
                     ),
-          color: color ?? Palette.purple,
-          elevation: 1,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(borderRadius ?? 60)),
-          ),
-          onPressed: isLoading.value ? () {} : onPressed,
         ),
       ),
     );

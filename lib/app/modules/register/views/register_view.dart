@@ -95,7 +95,7 @@ class RegisterView extends GetView<RegisterController> {
                                       ),
                                       child: const Center(
                                         child: Text(
-                                          'Añadir\foto',
+                                          'Añadir\nfoto',
                                           style: TextStyle(
                                             color: Palette.purple,
                                             fontSize: 18,

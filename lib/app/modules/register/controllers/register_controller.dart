@@ -136,17 +136,12 @@ class RegisterController extends GetxController {
           } else {
             restaurant.profilePictureUrl = '';
           }
-
-          bool userResult = await restaurantService.save(
+          restaurant.id = signUpResult.user.uid;
+          await restaurantService.save(
             restaurant: restaurant,
             customId: signUpResult.user.uid,
           );
-          print('userResult');
-          print(userResult);
-
-          // Get.offAllNamed(Routes.SUCCESFULL_REGISTRATION, arguments: {
-          //   'user': q1Controller.user,
-          // });
+          Get.offAllNamed(Routes.HOME);
         }
         isLoading.value = false;
       } catch (e) {
