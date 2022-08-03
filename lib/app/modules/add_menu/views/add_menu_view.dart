@@ -14,6 +14,7 @@ class AddMenuView extends GetView<AddMenuController> {
         centerTitle: true,
       ),
       body: CustomScrollView(
+        physics: const ClampingScrollPhysics(),
         slivers: [
           SliverToBoxAdapter(
             child: Column(
@@ -21,7 +22,10 @@ class AddMenuView extends GetView<AddMenuController> {
                 const SizedBox(height: 30),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Text('Escoge la categoría', style: styles.titleOffer),
+                  child: Text(
+                    'Escoge la categoría',
+                    style: styles.titleOffer,
+                  ),
                 ),
                 const SizedBox(height: 20),
                 Padding(
@@ -85,6 +89,21 @@ class AddMenuView extends GetView<AddMenuController> {
                     ),
                   ),
                 );
+              },
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: Obx(
+              () {
+                return controller.categoriestoUpload.isNotEmpty
+                    ? Padding(
+                        padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+                        child: Text(
+                          'Menús por categoría',
+                          style: styles.titleOffer,
+                        ),
+                      )
+                    : const SizedBox.shrink();
               },
             ),
           ),
