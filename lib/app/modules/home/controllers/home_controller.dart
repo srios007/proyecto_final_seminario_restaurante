@@ -1,3 +1,4 @@
+import 'package:proyecto_final_seminario_restaurante/app/routes/app_pages.dart';
 import 'package:proyecto_final_seminario_restaurante/app/services/model_services/category_service.dart';
 import 'package:proyecto_final_seminario_restaurante/app/models/restaurant_model.dart';
 import 'package:proyecto_final_seminario_restaurante/app/models/category_model.dart';
@@ -29,8 +30,8 @@ class HomeController extends GetxController {
   // Trae las categorías
   getCategories() async {
     categories = await categoryService.getCategories();
-    categories.forEach((element) {
-      print(element.name);
-    });
   }
+
+  //Ir a crear menú
+  goToAddMenu() => Get.toNamed(Routes.ADD_MENU);
 }

@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import '../modules/add_menu/bindings/add_menu_binding.dart';
+import '../modules/add_menu/views/add_menu_view.dart';
 import '../modules/forgot_password/bindings/forgot_password_binding.dart';
 import '../modules/forgot_password/views/forgot_password_view.dart';
 import '../modules/forgot_user/bindings/forgot_user_binding.dart';
@@ -57,6 +59,11 @@ class AppPages {
       name: _Paths.PROFILE,
       page: () => ProfileView(),
       binding: ProfileBinding(),
+    ),
+    GetPage(
+      name: _Paths.ADD_MENU,
+      page: () => const AddMenuView(),
+      binding: AddMenuBinding(),
     ),
   ];
 }

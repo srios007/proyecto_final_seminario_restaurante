@@ -48,7 +48,7 @@ class HomeView extends GetView<HomeController> {
                         const SizedBox(height: 30),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: Text('Mis platos', style: styles.titleOffer),
+                          child: Text('Mis menús', style: styles.titleOffer),
                         ),
                         const SizedBox(height: 30),
                         Padding(
@@ -57,8 +57,8 @@ class HomeView extends GetView<HomeController> {
                             height: 40,
                             width: Get.width - 80,
                             isLoading: false.obs,
-                            onPressed: () {},
-                            buttonText: 'Crear plato',
+                            onPressed: controller.goToAddMenu,
+                            buttonText: 'Agregar menú',
                           ),
                         ),
                         const SizedBox(height: 15),
