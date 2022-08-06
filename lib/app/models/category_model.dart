@@ -1,11 +1,10 @@
 import 'package:get/get.dart';
-import 'meal_model.dart';
 
 class Category {
   String? id;
   String? name;
   RxBool? isSelected = false.obs;
-  List<Meal>? meals;
+  RxList? meals;
 
   Category({
     this.id,

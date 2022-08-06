@@ -1,4 +1,5 @@
-import 'package:proyecto_final_seminario_restaurante/app/models/ingredient.dart';
+import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
 
 class Meal {
   String? id;
@@ -9,7 +10,11 @@ class Meal {
   double? price;
   bool? isAvaliable;
   int? amount;
-  List<Ingredient>? ingredients;
+  RxList? ingredients;
+  TextEditingController? nameController;
+  TextEditingController? descriptionController;
+  TextEditingController? priceController;
+  TextEditingController? amountController;
 
   Meal({
     this.id,
@@ -20,6 +25,10 @@ class Meal {
     this.isAvaliable,
     this.amount,
     this.ingredients,
+    this.nameController,
+    this.descriptionController,
+    this.priceController,
+    this.amountController,
   });
 
   Meal.fromJson(Map<String, dynamic> json) {

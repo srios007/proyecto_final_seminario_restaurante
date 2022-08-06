@@ -1,7 +1,7 @@
 import 'package:proyecto_final_seminario_restaurante/app/models/category_model.dart';
 import 'package:proyecto_final_seminario_restaurante/app/utils/utils.dart';
-
 import '../firebase_services/database_service.dart';
+import 'package:get/get.dart';
 
 class CategoryService {
   static String categoryReference = firebaseReferences.categories;
@@ -15,6 +15,7 @@ class CategoryService {
       Category category = Category.fromJson(
         (element.data() as Map<String, dynamic>),
       );
+      category.meals = [].obs;
       category.id = element.id;
       categories.add(category);
     }

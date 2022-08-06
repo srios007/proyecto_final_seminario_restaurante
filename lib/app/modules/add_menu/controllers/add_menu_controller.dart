@@ -1,28 +1,31 @@
+import 'package:flutter/widgets.dart';
 import 'package:proyecto_final_seminario_restaurante/app/modules/home/controllers/home_controller.dart';
 import 'package:proyecto_final_seminario_restaurante/app/widgets/snackbars.dart';
 import '../../../models/category_model.dart';
 import 'package:get/get.dart';
 
+import '../../../models/meal_model.dart';
+
 class AddMenuController extends GetxController {
-  List<Category> categories = [];
-  RxList categoriestoUpload = [].obs;
   HomeController homeController = Get.find();
+  final key = GlobalKey<FormState>();
+  List<Category> categories = [];
+  RxList categoriesMenu = [].obs;
 
   @override
   void onInit() {
-    categories = homeController.categories;
+    categories.addAll(homeController.categories);
     super.onInit();
   }
 
-  //Selecciona la categoría
-  addCategory(int position) {
+  //Agrega una categoría al menú
+  addCategoryMenu(int position) {
     List<dynamic> auxList = [];
-
-    auxList = categoriestoUpload
+    auxList = categoriesMenu
         .where((element) => element.id == categories[position].id)
         .toList();
     if (auxList.isEmpty) {
-      categoriestoUpload.add(categories[position]);
+      categoriesMenu.add(categories[position]);
     } else {
       SnackBars.showErrorSnackBar(
         'No se puede agregar dos veces la misma categoría, por favor escoge otra',
@@ -30,7 +33,31 @@ class AddMenuController extends GetxController {
     }
   }
 
-  deleteCategory(dynamic category) {
-    categoriestoUpload.remove(category);
+  //Elimina una categoría al menú
+  deleteCategoryMenu(dynamic category) {
+    category.meals.clear();
+    categoriesMenu.remove(category);
+  }
+
+  //Agrega plato al menu de la categoría
+  addMealToCategoryMenu(int position) {
+    categoriesMenu[position].meals.add(
+          Meal(
+            nameController: TextEditingController(),
+            descriptionController: TextEditingController(),
+            priceController: TextEditingController(),
+            amountController: TextEditingController(),
+          ),
+        );
+  }
+
+  //Elimina plato al menu de la categoría
+  deleteMealToCategoryMenu(int position) {
+    categoriesMenu[position].meals.removeAt(position);
+  }
+
+  // Valida que todos los datos ingresados sean corectos
+  validateMeal() {
+    key.currentState!.validate();
   }
 }

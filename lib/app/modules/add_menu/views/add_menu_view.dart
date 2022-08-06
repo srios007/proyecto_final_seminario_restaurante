@@ -1,5 +1,9 @@
+import 'package:flutter/services.dart';
+import 'package:proyecto_final_seminario_restaurante/app/models/meal_model.dart';
 import 'package:proyecto_final_seminario_restaurante/app/utils/utils.dart';
+import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
 import '../controllers/add_menu_controller.dart';
+import '../../../widgets/add_menu_input.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -13,115 +17,118 @@ class AddMenuView extends GetView<AddMenuController> {
         title: const Text('Agregar menú'),
         centerTitle: true,
       ),
-      body: CustomScrollView(
-        physics: const ClampingScrollPhysics(),
-        slivers: [
-          SliverToBoxAdapter(
-            child: Column(
-              children: [
-                const SizedBox(height: 30),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Text(
-                    'Escoge la categoría',
-                    style: styles.titleOffer,
-                  ),
-                ),
-                const SizedBox(height: 20),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Text(
-                    'Recuerda que no pueden haber categorías repetidas.',
-                    style: styles.hintTextStyleRegister,
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-                const SizedBox(height: 20),
-              ],
-            ),
-          ),
-          SliverGrid(
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              childAspectRatio: 3,
-            ),
-            delegate: SliverChildBuilderDelegate(
-              childCount: controller.homeController.categories.length,
-              (BuildContext context, int index) {
-                return CupertinoButton(
-                  padding: EdgeInsets.zero,
-                  onPressed: () {
-                    controller.addCategory(index);
-                  },
-                  child: Container(
-                    height: 40,
-                    width: Get.width * 0.4,
-                    decoration: ShapeDecoration.fromBoxDecoration(
-                      BoxDecoration(
-                        color: Palette.white,
-                        borderRadius: BorderRadius.circular(20),
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Color.fromARGB(255, 209, 208, 208),
-                            offset: Offset(4.0, 4.0),
-                            blurRadius: 8.0,
-                          ),
-                        ],
-                      ),
-                    ),
-                    child: Center(
-                      child: Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 10),
-                        child: Text(
-                          '${controller.homeController.categories[index].name}',
-                          style: const TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w700,
-                            color: Palette.purple,
-                          ),
-                          textAlign: TextAlign.center,
-                          overflow: TextOverflow.ellipsis,
-                          textScaleFactor: context.textScaleFactor > 1
-                              ? 1
-                              : context.textScaleFactor,
-                        ),
-                      ),
+      body: Form(
+        key: controller.key,
+        child: CustomScrollView(
+          physics: const ClampingScrollPhysics(),
+          slivers: [
+            SliverToBoxAdapter(
+              child: Column(
+                children: [
+                  const SizedBox(height: 30),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Text(
+                      'Escoge la categoría',
+                      style: styles.titleOffer,
                     ),
                   ),
-                );
-              },
-            ),
-          ),
-          SliverToBoxAdapter(
-            child: Obx(
-              () {
-                return controller.categoriestoUpload.isNotEmpty
-                    ? Padding(
-                        padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
-                        child: Text(
-                          'Menús por categoría',
-                          style: styles.titleOffer,
-                        ),
-                      )
-                    : const SizedBox.shrink();
-              },
-            ),
-          ),
-          Obx(
-            () => SliverList(
-              delegate: SliverChildBuilderDelegate(
-                (BuildContext context, int index) {
-                  return ContainerMenu(
-                    controller: controller,
-                    index: index,
-                  );
-                },
-                childCount:
-                    controller.categoriestoUpload.length, // 1000 list items
+                  const SizedBox(height: 20),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Text(
+                      'Recuerda que no pueden haber categorías repetidas.',
+                      style: styles.hintTextStyleRegister,
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                ],
               ),
             ),
-          ),
-        ],
+            SliverGrid(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: 3,
+              ),
+              delegate: SliverChildBuilderDelegate(
+                childCount: controller.homeController.categories.length,
+                (BuildContext context, int index) {
+                  return CupertinoButton(
+                    padding: EdgeInsets.zero,
+                    onPressed: () {
+                      controller.addCategoryMenu(index);
+                    },
+                    child: Container(
+                      height: 40,
+                      width: Get.width * 0.4,
+                      decoration: ShapeDecoration.fromBoxDecoration(
+                        BoxDecoration(
+                          color: Palette.white,
+                          borderRadius: BorderRadius.circular(20),
+                          boxShadow: const [
+                            BoxShadow(
+                              color: Color.fromARGB(255, 209, 208, 208),
+                              offset: Offset(4.0, 4.0),
+                              blurRadius: 8.0,
+                            ),
+                          ],
+                        ),
+                      ),
+                      child: Center(
+                        child: Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 10),
+                          child: Text(
+                            '${controller.homeController.categories[index].name}',
+                            style: const TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w700,
+                              color: Palette.purple,
+                            ),
+                            textAlign: TextAlign.center,
+                            overflow: TextOverflow.ellipsis,
+                            textScaleFactor: context.textScaleFactor > 1
+                                ? 1
+                                : context.textScaleFactor,
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+            SliverToBoxAdapter(
+              child: Obx(
+                () {
+                  return controller.categoriesMenu.isNotEmpty
+                      ? Padding(
+                          padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+                          child: Text(
+                            'Menús por categoría',
+                            style: styles.titleOffer,
+                          ),
+                        )
+                      : const SizedBox.shrink();
+                },
+              ),
+            ),
+            Obx(
+              () => SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  (BuildContext context, int index) {
+                    return ContainerMenu(
+                      controller: controller,
+                      indexCategory: index,
+                    );
+                  },
+                  childCount:
+                      controller.categoriesMenu.length, // 1000 list items
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -131,11 +138,11 @@ class ContainerMenu extends StatelessWidget {
   ContainerMenu({
     Key? key,
     required this.controller,
-    required this.index,
+    required this.indexCategory,
   }) : super(key: key);
 
   final AddMenuController controller;
-  int index;
+  int indexCategory;
 
   @override
   Widget build(BuildContext context) {
@@ -148,7 +155,7 @@ class ContainerMenu extends StatelessWidget {
         ),
         borderRadius: BorderRadius.circular(20),
       ),
-      height: 80,
+      // height: 80,
       alignment: Alignment.center,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -157,7 +164,7 @@ class ContainerMenu extends StatelessWidget {
             children: [
               const SizedBox(width: 20),
               Text(
-                controller.categoriestoUpload[index].name!,
+                controller.categoriesMenu[indexCategory].name!,
                 style: const TextStyle(fontSize: 20),
               ),
               const Spacer(),
@@ -167,12 +174,159 @@ class ContainerMenu extends StatelessWidget {
                   color: Palette.darkBlue,
                 ),
                 onPressed: () {
-                  controller.deleteCategory(
-                    controller.categoriestoUpload[index],
+                  controller.deleteCategoryMenu(
+                    controller.categoriesMenu[indexCategory],
                   );
                 },
               )
             ],
+          ),
+          Obx(() => SizedBox(
+                height: 460.0 *
+                    controller
+                        .categoriesMenu[indexCategory].meals.value.length!,
+                width: Get.width,
+                child: ListView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: controller
+                      .categoriesMenu[indexCategory].meals.value.length,
+                  itemBuilder: (context, index) {
+                    var meal =
+                        controller.categoriesMenu[indexCategory].meals[index];
+                    return MealContainer(
+                      index: index,
+                      meal: meal,
+                      name: controller.categoriesMenu[indexCategory].name!,
+                    );
+                  },
+                ),
+              )),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              CupertinoButton(
+                child: Text(
+                  'Agregar \n${controller.categoriesMenu[indexCategory].name!.toLowerCase()}',
+                  style: const TextStyle(
+                    fontSize: 20,
+                    color: Palette.purple,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                onPressed: () {
+                  controller.addMealToCategoryMenu(indexCategory);
+                },
+              ),
+              CupertinoButton(
+                onPressed: controller.validateMeal,
+                child: const Text(
+                  'Validar platos',
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Palette.purple,
+                  ),
+                ),
+              )
+            ],
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class MealContainer extends StatelessWidget {
+  MealContainer({
+    Key? key,
+    required this.index,
+    required this.meal,
+    required this.name,
+  }) : super(key: key);
+  int index;
+  Meal meal;
+  String name;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+      width: 145,
+      height: 430,
+      decoration: ShapeDecoration.fromBoxDecoration(
+        BoxDecoration(
+          color: Palette.white,
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: const [
+            BoxShadow(
+              color: Color(0xFFD1D0D0),
+              offset: Offset(4.0, 4.0),
+              blurRadius: 4.0,
+            ),
+          ],
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20, 20, 0, 0),
+            child: Text(
+              '$name ${index + 1}',
+              style: const TextStyle(fontSize: 20),
+            ),
+          ),
+          AddMenuInput(
+            hintText: 'Nombre del plato',
+            textEditingController: meal.nameController!,
+            onChanged: (value) {
+              meal.name = meal.nameController!.text;
+            },
+          ),
+          AddMenuInput(
+            maxLines: 3,
+            hintText: 'Descripción del plato',
+            textEditingController: meal.descriptionController!,
+            onChanged: (value) {
+              meal.description = meal.descriptionController!.text;
+            },
+          ),
+          AddMenuInput(
+            hintText: 'Precio del plato',
+            textEditingController: meal.priceController!,
+            onChanged: (value) {
+              meal.price = double.parse(
+                meal.priceController!.text.replaceAll('.', ''),
+              );
+            },
+            inputFormatters: [
+              MoneyInputFormatter(
+                mantissaLength: 0,
+                thousandSeparator: ThousandSeparator.Period,
+              ),
+            ],
+            keyboardType: TextInputType.number,
+          ),
+          AddMenuInput(
+            hintText: 'Cantidad de platos',
+            textEditingController: meal.amountController!,
+            onChanged: (value) {
+              meal.amount = int.parse(meal.amountController!.text);
+            },
+            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+            keyboardType: TextInputType.number,
+          ),
+          Align(
+            alignment: Alignment.center,
+            child: CupertinoButton(
+              child: const Text(
+                'Agregar Ingredientes',
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Palette.purple,
+                ),
+              ),
+              onPressed: () {},
+            ),
           ),
         ],
       ),
