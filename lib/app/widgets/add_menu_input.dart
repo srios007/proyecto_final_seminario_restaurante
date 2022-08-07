@@ -24,6 +24,7 @@ class AddMenuInput extends StatelessWidget {
     this.textCapitalization,
     this.inputFormatters,
     this.maxLines,
+    this.size,
     this.onChanged,
   }) : super(key: key);
 
@@ -43,6 +44,7 @@ class AddMenuInput extends StatelessWidget {
   TextCapitalization? textCapitalization;
   List<TextInputFormatter>? inputFormatters;
   int? maxLines;
+  double? size;
   void Function(String)? onChanged;
 
   @override
@@ -53,7 +55,7 @@ class AddMenuInput extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            width: Get.width - 155,
+            width: size ?? Get.width - 155,
             child: TextFormField(
               maxLines: maxLines ?? 1,
               obscureText: obscureText,

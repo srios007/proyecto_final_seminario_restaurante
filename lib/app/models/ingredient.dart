@@ -1,3 +1,6 @@
+import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
+
 class Ingredient {
   String? id;
   String? name;
@@ -5,10 +8,16 @@ class Ingredient {
   double? price;
   bool? isAvaliable;
   int? amount;
-  int? amountMeasure;
+  String? amountMeasure;
   int? amountIngredient;
-  bool? isSpicy;
-  bool? isMandatory;
+  RxBool? isSpicy = false.obs;
+  RxBool? isMandatory = false.obs;
+  TextEditingController? nameController;
+  TextEditingController? descriptionController;
+  TextEditingController? priceController;
+  TextEditingController? amountController;
+  TextEditingController? amountMeasureController;
+  TextEditingController? amountIngredientController;
 
   Ingredient({
     this.id,
@@ -21,6 +30,12 @@ class Ingredient {
     this.amountIngredient,
     this.isSpicy,
     this.isMandatory,
+    this.nameController,
+    this.descriptionController,
+    this.priceController,
+    this.amountController,
+    this.amountMeasureController,
+    this.amountIngredientController,
   });
 
   Ingredient.fromJson(Map<String, dynamic> json) {

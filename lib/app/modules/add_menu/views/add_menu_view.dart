@@ -178,11 +178,11 @@ class ContainerMenu extends StatelessWidget {
                     controller.categoriesMenu[indexCategory],
                   );
                 },
-              )
+              ),
             ],
           ),
           Obx(() => SizedBox(
-                height: 460.0 *
+                height: 480.0 *
                     controller
                         .categoriesMenu[indexCategory].meals.value.length!,
                 width: Get.width,
@@ -195,8 +195,10 @@ class ContainerMenu extends StatelessWidget {
                         controller.categoriesMenu[indexCategory].meals[index];
                     return MealContainer(
                       index: index,
+                      indexCategory: indexCategory,
                       meal: meal,
                       name: controller.categoriesMenu[indexCategory].name!,
+                      controller: controller,
                     );
                   },
                 ),
@@ -239,19 +241,23 @@ class MealContainer extends StatelessWidget {
   MealContainer({
     Key? key,
     required this.index,
+    required this.indexCategory,
     required this.meal,
     required this.name,
+    required this.controller,
   }) : super(key: key);
   int index;
+  int indexCategory;
   Meal meal;
   String name;
+  AddMenuController controller;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
       width: 145,
-      height: 430,
+      height: 450,
       decoration: ShapeDecoration.fromBoxDecoration(
         BoxDecoration(
           color: Palette.white,
@@ -268,15 +274,29 @@ class MealContainer extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(20, 20, 0, 0),
-            child: Text(
-              '$name ${index + 1}',
-              style: const TextStyle(fontSize: 20),
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+                child: Text(
+                  '$name ${index + 1}',
+                  style: const TextStyle(fontSize: 20),
+                ),
+              ),
+              CupertinoButton(
+                child: const Icon(
+                  Icons.delete,
+                  color: Palette.darkBlue,
+                ),
+                onPressed: () {
+                  controller.deleteMealToCategoryMenu(indexCategory, index);
+                },
+              ),
+            ],
           ),
           AddMenuInput(
-            hintText: 'Nombre del plato',
+            hintText: 'Nombre',
             textEditingController: meal.nameController!,
             onChanged: (value) {
               meal.name = meal.nameController!.text;
@@ -284,14 +304,14 @@ class MealContainer extends StatelessWidget {
           ),
           AddMenuInput(
             maxLines: 3,
-            hintText: 'Descripción del plato',
+            hintText: 'Descripción',
             textEditingController: meal.descriptionController!,
             onChanged: (value) {
               meal.description = meal.descriptionController!.text;
             },
           ),
           AddMenuInput(
-            hintText: 'Precio del plato',
+            hintText: 'Precio',
             textEditingController: meal.priceController!,
             onChanged: (value) {
               meal.price = double.parse(
@@ -307,7 +327,7 @@ class MealContainer extends StatelessWidget {
             keyboardType: TextInputType.number,
           ),
           AddMenuInput(
-            hintText: 'Cantidad de platos',
+            hintText: 'Cantidad',
             textEditingController: meal.amountController!,
             onChanged: (value) {
               meal.amount = int.parse(meal.amountController!.text);
@@ -325,7 +345,13 @@ class MealContainer extends StatelessWidget {
                   color: Palette.purple,
                 ),
               ),
-              onPressed: () {},
+              onPressed: () {
+                controller.goToAddIngredient(
+                  categoryPosition: indexCategory,
+                  mealPosition: index,
+                  name: name,
+                );
+              },
             ),
           ),
         ],

@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import '../modules/add_ingredients/bindings/add_ingredients_binding.dart';
+import '../modules/add_ingredients/views/add_ingredients_view.dart';
 import '../modules/add_menu/bindings/add_menu_binding.dart';
 import '../modules/add_menu/views/add_menu_view.dart';
 import '../modules/forgot_password/bindings/forgot_password_binding.dart';
@@ -64,6 +66,11 @@ class AppPages {
       name: _Paths.ADD_MENU,
       page: () => const AddMenuView(),
       binding: AddMenuBinding(),
+    ),
+    GetPage(
+      name: _Paths.ADD_INGREDIENTS,
+      page: () => const AddIngredientsView(),
+      binding: AddIngredientsBinding(),
     ),
   ];
 }

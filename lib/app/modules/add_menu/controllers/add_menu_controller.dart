@@ -5,6 +5,7 @@ import '../../../models/category_model.dart';
 import 'package:get/get.dart';
 
 import '../../../models/meal_model.dart';
+import '../../../routes/app_pages.dart';
 
 class AddMenuController extends GetxController {
   HomeController homeController = Get.find();
@@ -47,17 +48,38 @@ class AddMenuController extends GetxController {
             descriptionController: TextEditingController(),
             priceController: TextEditingController(),
             amountController: TextEditingController(),
+            ingredients: [].obs,
           ),
         );
   }
 
   //Elimina plato al menu de la categoría
-  deleteMealToCategoryMenu(int position) {
-    categoriesMenu[position].meals.removeAt(position);
+  deleteMealToCategoryMenu(int categoryPosition, int position) {
+    categoriesMenu[categoryPosition].meals.removeAt(position);
   }
 
   // Valida que todos los datos ingresados sean corectos
   validateMeal() {
     key.currentState!.validate();
+  }
+
+  //Va a crear ingredientes con los datos del Meal
+  goToAddIngredient({
+    required int categoryPosition,
+    required int mealPosition,
+    required String name,
+  }) async {
+    List<dynamic> auxList = [];
+    auxList = await Get.toNamed(Routes.ADD_INGREDIENTS, arguments: {
+      'meal': categoriesMenu[categoryPosition].meals[mealPosition],
+      'category': name,
+      'name': '$name ${mealPosition +1}',
+    });
+    if (auxList.isNotEmpty) {
+      categoriesMenu[categoryPosition]
+          .meals[mealPosition]
+          .ingredients
+          .addAll(auxList);
+    }
   }
 }

@@ -11,6 +11,7 @@ abstract class Routes {
   static const FORGOT_PASSWORD = _Paths.FORGOT_PASSWORD;
   static const PROFILE = _Paths.PROFILE;
   static const ADD_MENU = _Paths.ADD_MENU;
+  static const ADD_INGREDIENTS = _Paths.ADD_INGREDIENTS;
 }
 
 abstract class _Paths {
@@ -23,4 +24,5 @@ abstract class _Paths {
   static const FORGOT_PASSWORD = '/forgot-password';
   static const PROFILE = '/profile';
   static const ADD_MENU = '/add-menu';
+  static const ADD_INGREDIENTS = '/add-ingredients';
 }
