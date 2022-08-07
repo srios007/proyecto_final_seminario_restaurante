@@ -17,6 +17,13 @@ class AddIngredientsView extends GetView<AddIngredientsController> {
       appBar: AppBar(
         title: Text(controller.name),
         centerTitle: true,
+        leading: GestureDetector(
+          onTap: controller.validateGetBack,
+          child: const Icon(
+            Icons.chevron_left_sharp,
+            size: 40,
+          ),
+        ),
       ),
       body: Form(
         key: controller.key,
@@ -36,10 +43,9 @@ class AddIngredientsView extends GetView<AddIngredientsController> {
               () => SliverList(
                 delegate: SliverChildBuilderDelegate(
                   (BuildContext context, int index) {
-                    var ingredient = controller.meal.ingredients![index];
                     return IngredientContainer(
                       index: index,
-                      ingredient: ingredient,
+                      ingredient: controller.meal.ingredients![index],
                       controller: controller,
                     );
                   },

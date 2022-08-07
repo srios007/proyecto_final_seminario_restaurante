@@ -182,7 +182,7 @@ class ContainerMenu extends StatelessWidget {
             ],
           ),
           Obx(() => SizedBox(
-                height: 480.0 *
+                height: 510.0 *
                     controller
                         .categoriesMenu[indexCategory].meals.value.length!,
                 width: Get.width,
@@ -257,7 +257,7 @@ class MealContainer extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
       width: 145,
-      height: 450,
+      height: 480,
       decoration: ShapeDecoration.fromBoxDecoration(
         BoxDecoration(
           color: Palette.white,
@@ -335,11 +335,62 @@ class MealContainer extends StatelessWidget {
             inputFormatters: [FilteringTextInputFormatter.digitsOnly],
             keyboardType: TextInputType.number,
           ),
+          Obx(() => meal.ingredients!.isEmpty
+              ? const SizedBox.shrink()
+              : controller.isLoading.value?
+              const CircularProgressIndicator()
+              :SizedBox(
+                  height: 50,
+                  child: ListView.builder(
+                    physics: const ClampingScrollPhysics(),
+                    scrollDirection: Axis.horizontal,
+                    itemCount: meal.ingredients!.length,
+                    itemBuilder: (context, index) {
+                      return Container(
+                        margin:
+                            const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                        height: 30,
+                        width: Get.width * 0.4,
+                        decoration: ShapeDecoration.fromBoxDecoration(
+                          BoxDecoration(
+                            color: Palette.white,
+                            borderRadius: BorderRadius.circular(20),
+                            boxShadow: const [
+                              BoxShadow(
+                                color: Color.fromARGB(255, 209, 208, 208),
+                                offset: Offset(4.0, 4.0),
+                                blurRadius: 8.0,
+                              ),
+                            ],
+                          ),
+                        ),
+                        child: Center(
+                          child: Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 10),
+                            child: Text(
+                              '${meal.ingredients![index].name}',
+                              style: const TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w700,
+                                color: Palette.purple,
+                              ),
+                              textAlign: TextAlign.center,
+                              overflow: TextOverflow.ellipsis,
+                              textScaleFactor: context.textScaleFactor > 1
+                                  ? 1
+                                  : context.textScaleFactor,
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                )),
           Align(
             alignment: Alignment.center,
             child: CupertinoButton(
               child: const Text(
-                'Agregar Ingredientes',
+                'Agregar ingredientes',
                 style: TextStyle(
                   fontSize: 20,
                   color: Palette.purple,
@@ -353,7 +404,7 @@ class MealContainer extends StatelessWidget {
                 );
               },
             ),
-          ),
+          )
         ],
       ),
     );

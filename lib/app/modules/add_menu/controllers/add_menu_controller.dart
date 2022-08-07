@@ -12,6 +12,7 @@ class AddMenuController extends GetxController {
   final key = GlobalKey<FormState>();
   List<Category> categories = [];
   RxList categoriesMenu = [].obs;
+  RxBool isLoading = false.obs;
 
   @override
   void onInit() {
@@ -69,17 +70,14 @@ class AddMenuController extends GetxController {
     required int mealPosition,
     required String name,
   }) async {
+    isLoading.value = true;
     List<dynamic> auxList = [];
     auxList = await Get.toNamed(Routes.ADD_INGREDIENTS, arguments: {
       'meal': categoriesMenu[categoryPosition].meals[mealPosition],
       'category': name,
-      'name': '$name ${mealPosition +1}',
+      'name': '$name ${mealPosition + 1}',
     });
-    if (auxList.isNotEmpty) {
-      categoriesMenu[categoryPosition]
-          .meals[mealPosition]
-          .ingredients
-          .addAll(auxList);
-    }
+
+    isLoading.value = false;
   }
 }

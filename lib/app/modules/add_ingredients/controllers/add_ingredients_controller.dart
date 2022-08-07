@@ -1,18 +1,20 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:proyecto_final_seminario_restaurante/app/models/ingredient.dart';
+import 'package:proyecto_final_seminario_restaurante/app/widgets/widgets.dart';
 
 import '../../../models/meal_model.dart';
 
 class AddIngredientsController extends GetxController {
   final key = GlobalKey<FormState>();
-  late Meal meal;
+  Meal meal = Meal();
   late String name;
   late String category;
 
   final count = 0.obs;
   @override
   void onInit() {
+    meal.ingredients = [].obs;
     meal = Get.arguments['meal'];
     name = Get.arguments['name'];
     category = Get.arguments['category'];
@@ -35,6 +37,17 @@ class AddIngredientsController extends GetxController {
     );
   }
 
+  //Valida al regresar os ingredientes
+  validateGetBack() {
+    if (key.currentState!.validate()) {
+      Get.back(result: meal.ingredients);
+    } else {
+      SnackBars.showErrorSnackBar(
+        'Por favor termina de rellenar los campos o elimina los ingredientes que no necesites.',
+      );
+    }
+  }
+
   //Eliminar ingrediente
   deleteIngredient(int position) {
     meal.ingredients!.removeAt(position);
@@ -42,7 +55,9 @@ class AddIngredientsController extends GetxController {
 
   // Valida los datos de todos los ingredientes
   validateAndAddIngredients() {
-    if (key.currentState!.validate()) {}
+    if (key.currentState!.validate()) {
+      Get.back(result: meal.ingredients);
+    }
   }
 
   //Cambia el valor del checkbox de isMandatory
