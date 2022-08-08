@@ -2,6 +2,7 @@ import 'package:flutter/services.dart';
 import 'package:proyecto_final_seminario_restaurante/app/models/meal_model.dart';
 import 'package:proyecto_final_seminario_restaurante/app/utils/utils.dart';
 import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
+import 'package:proyecto_final_seminario_restaurante/app/widgets/widgets.dart';
 import '../controllers/add_menu_controller.dart';
 import '../../../widgets/add_menu_input.dart';
 import 'package:flutter/cupertino.dart';
@@ -127,6 +128,19 @@ class AddMenuView extends GetView<AddMenuController> {
                 ),
               ),
             ),
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 30,
+                  vertical: 20,
+                ),
+                child: PurpleButton(
+                  buttonText: 'Agregar menú',
+                  isLoading: controller.isLoadingMenu,
+                  onPressed: controller.addMenu,
+                ),
+              ),
+            )
           ],
         ),
       ),
@@ -337,55 +351,56 @@ class MealContainer extends StatelessWidget {
           ),
           Obx(() => meal.ingredients!.isEmpty
               ? const SizedBox.shrink()
-              : controller.isLoading.value?
-              const CircularProgressIndicator()
-              :SizedBox(
-                  height: 50,
-                  child: ListView.builder(
-                    physics: const ClampingScrollPhysics(),
-                    scrollDirection: Axis.horizontal,
-                    itemCount: meal.ingredients!.length,
-                    itemBuilder: (context, index) {
-                      return Container(
-                        margin:
-                            const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                        height: 30,
-                        width: Get.width * 0.4,
-                        decoration: ShapeDecoration.fromBoxDecoration(
-                          BoxDecoration(
-                            color: Palette.white,
-                            borderRadius: BorderRadius.circular(20),
-                            boxShadow: const [
-                              BoxShadow(
-                                color: Color.fromARGB(255, 209, 208, 208),
-                                offset: Offset(4.0, 4.0),
-                                blurRadius: 8.0,
+              : controller.isLoading.value
+                  ? const CircularProgressIndicator()
+                  : SizedBox(
+                      height: 50,
+                      child: ListView.builder(
+                        physics: const ClampingScrollPhysics(),
+                        scrollDirection: Axis.horizontal,
+                        itemCount: meal.ingredients!.length,
+                        itemBuilder: (context, index) {
+                          return Container(
+                            margin: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 10),
+                            height: 30,
+                            width: Get.width * 0.4,
+                            decoration: ShapeDecoration.fromBoxDecoration(
+                              BoxDecoration(
+                                color: Palette.white,
+                                borderRadius: BorderRadius.circular(20),
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: Color.fromARGB(255, 209, 208, 208),
+                                    offset: Offset(4.0, 4.0),
+                                    blurRadius: 8.0,
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
-                        ),
-                        child: Center(
-                          child: Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 10),
-                            child: Text(
-                              '${meal.ingredients![index].name}',
-                              style: const TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w700,
-                                color: Palette.purple,
-                              ),
-                              textAlign: TextAlign.center,
-                              overflow: TextOverflow.ellipsis,
-                              textScaleFactor: context.textScaleFactor > 1
-                                  ? 1
-                                  : context.textScaleFactor,
                             ),
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                )),
+                            child: Center(
+                              child: Container(
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 10),
+                                child: Text(
+                                  '${meal.ingredients![index].name}',
+                                  style: const TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w700,
+                                    color: Palette.purple,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                  overflow: TextOverflow.ellipsis,
+                                  textScaleFactor: context.textScaleFactor > 1
+                                      ? 1
+                                      : context.textScaleFactor,
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    )),
           Align(
             alignment: Alignment.center,
             child: CupertinoButton(

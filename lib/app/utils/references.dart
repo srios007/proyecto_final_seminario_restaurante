@@ -8,8 +8,8 @@ class FirebaseReferences {
   String addresses = 'addresses';
   String categories = 'categories';
   String constants = 'constants';
-  String subcategories = 'subcategories';
-  String pictures = 'pictures';
+  String meals = 'meals';
+  String ingredients = 'ingredients';
   String purchases = 'purchases';
 }
 

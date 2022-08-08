@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import '../../models/meal_model.dart';
 import '../../utils/references.dart';
 
 class Database {
@@ -639,6 +640,38 @@ class Database {
           .add(subcollectionData);
       subcollectionData['id'] = reference.id;
       await reference.update(subcollectionData);
+      return true;
+    } on Exception catch (e) {
+      print(e);
+      return false;
+    }
+  }
+
+  /// Crea una oferta en Firebase correspondiente a un PRODUCTO
+  Future<bool> saveMealanIngredients(
+      {required Meal meal,
+      required String collection,
+      required String customId}) async {
+    try {
+      CollectionReference collRef = firestore.collection(collection);
+      DocumentReference docReferance = collRef.doc(customId);
+
+      await firestore
+          .collection(collection)
+          .doc(docReferance.id)
+          .set({...meal.toJson(), 'id': docReferance.id});
+
+      for (int i = 0; i < meal.ingredients!.length; i++) {
+        DocumentReference ingredientReference = await firestore
+            .collection(collection)
+            .doc(docReferance.id)
+            .collection(firebaseReferences.ingredients)
+            .add(meal.toJson());
+
+        await ingredientReference
+            .set({...meal.toJson(), 'id': ingredientReference.id});
+      }
+
       return true;
     } on Exception catch (e) {
       print(e);

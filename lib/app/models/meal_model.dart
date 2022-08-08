@@ -5,6 +5,7 @@ class Meal {
   String? id;
   DateTime? created;
   String? restaurantId;
+  String? categoryId;
   String? name;
   String? description;
   double? price;
@@ -20,6 +21,7 @@ class Meal {
     this.id,
     this.created,
     this.restaurantId,
+    this.categoryId,
     this.name,
     this.price,
     this.isAvaliable,
@@ -35,6 +37,7 @@ class Meal {
     id = json['id'];
     created = json['created'].toDate();
     restaurantId = json['restaurantId'];
+    categoryId = json['categoyId'];
     name = json['name'];
     description = json['description'];
     price = json['price'];
@@ -47,6 +50,7 @@ class Meal {
     data['id'] = id;
     data['created'] = created;
     data['restaurantId'] = restaurantId;
+    data['categoyId'] = categoryId;
     data['name'] = name;
     data['description'] = description;
     data['price'] = price;
