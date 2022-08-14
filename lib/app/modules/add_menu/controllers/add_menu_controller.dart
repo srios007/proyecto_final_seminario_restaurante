@@ -1,18 +1,17 @@
-import 'dart:io';
-import 'dart:math';
 
-import 'package:image_picker/image_picker.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:proyecto_final_seminario_restaurante/app/modules/home/controllers/home_controller.dart';
 import 'package:proyecto_final_seminario_restaurante/app/services/model_services/meal_service.dart';
 import 'package:proyecto_final_seminario_restaurante/app/widgets/snackbars.dart';
+import '../../../services/firebase_services/storage_service.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:image_picker/image_picker.dart';
 import '../../../models/category_model.dart';
 import '../../../models/meal_model.dart';
 import '../../../routes/app_pages.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-
-import '../../../services/firebase_services/storage_service.dart';
+import 'dart:math';
+import 'dart:io';
 
 class AddMenuController extends GetxController {
   HomeController homeController = Get.find();
