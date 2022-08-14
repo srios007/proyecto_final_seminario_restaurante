@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:proyecto_final_seminario_restaurante/app/models/restaurant_model.dart';
 import 'package:proyecto_final_seminario_restaurante/app/utils/utils.dart';
 import 'package:proyecto_final_seminario_restaurante/app/widgets/widgets.dart';
-import '../model_services/client_service.dart';
+import '../model_services/restaurant_service.dart';
 import '../../models/client_model.dart' as projectUser;
 import 'database_service.dart';
 

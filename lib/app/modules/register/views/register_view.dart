@@ -215,6 +215,7 @@ class RegisterView extends GetView<RegisterController> {
       },
     );
   }
+
 }
 
 class _PhoneNumberInput extends StatelessWidget {

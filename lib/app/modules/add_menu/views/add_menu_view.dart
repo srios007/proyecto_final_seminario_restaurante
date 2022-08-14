@@ -196,7 +196,7 @@ class ContainerMenu extends StatelessWidget {
             ],
           ),
           Obx(() => SizedBox(
-                height: 510.0 *
+                height: 610.0 *
                     controller
                         .categoriesMenu[indexCategory].meals.value.length!,
                 width: Get.width,
@@ -271,7 +271,7 @@ class MealContainer extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
       width: 145,
-      height: 480,
+      height: 580,
       decoration: ShapeDecoration.fromBoxDecoration(
         BoxDecoration(
           color: Palette.white,
@@ -308,6 +308,65 @@ class MealContainer extends StatelessWidget {
                 },
               ),
             ],
+          ),
+          Align(
+            alignment: Alignment.center,
+            child: GestureDetector(
+              onTap: () {
+                profilePictureAlert(context);
+              },
+              child: Obx(
+                () {
+                  return meal.isLoading!.value
+                      ? Container(
+                          height: 100,
+                          width: 100,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(100),
+                            color: Palette.white,
+                          ),
+                          child: const CircularProgressIndicator(),
+                        )
+                      : meal.picture != null
+                          ? Container(
+                              height: 100,
+                              width: 100,
+                              decoration: const BoxDecoration(
+                                shape: BoxShape.circle,
+                              ),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(100),
+                                child: Image.file(
+                                  meal.picture!,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            )
+                          : Container(
+                              height: 100,
+                              width: 100,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                  width: 2,
+                                  color: Palette.darkBlue,
+                                ),
+                              ),
+                              child: const Center(
+                                child: Text(
+                                  'Añadir\nfoto',
+                                  style: TextStyle(
+                                    color: Palette.purple,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            );
+                },
+              ),
+            ),
           ),
           AddMenuInput(
             hintText: 'Nombre',
@@ -422,6 +481,78 @@ class MealContainer extends StatelessWidget {
           )
         ],
       ),
+    );
+  }
+
+  void profilePictureAlert(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (dialogContext) {
+        return AlertDialog(
+          scrollable: true,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(16),
+            ),
+          ),
+          contentPadding: const EdgeInsets.fromLTRB(24, 0, 0, 24),
+          content: Stack(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(right: 24),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const SizedBox(height: 20),
+                    const Icon(
+                      Icons.account_circle_rounded,
+                      color: Palette.purple,
+                      size: 100,
+                    ),
+                    const SizedBox(height: 20),
+                    const Text(
+                      "Sube una imagen para tu perfil de Lizit",
+                      style: TextStyle(
+                        fontSize: 16,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 30),
+                    PurpleButton(
+                      onPressed: () async {
+                        Get.back();
+
+                        await controller.getMealPicture(false, meal);
+                      },
+                      buttonText: 'Desde galería',
+                      isLoading: false.obs,
+                    ),
+                    const SizedBox(height: 30),
+                    PurpleButton(
+                      onPressed: () async {
+                        Get.back();
+
+                        await controller.getMealPicture(true, meal);
+                      },
+                      buttonText: 'Tomar foto',
+                      isLoading: false.obs,
+                    ),
+                    const SizedBox(height: 30),
+                  ],
+                ),
+              ),
+              Align(
+                alignment: Alignment.topRight,
+                child: IconButton(
+                  padding: EdgeInsets.zero,
+                  onPressed: Get.back,
+                  icon: const Icon(Icons.close),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }

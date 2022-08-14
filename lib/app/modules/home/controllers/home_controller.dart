@@ -10,8 +10,9 @@ import 'package:get/get.dart';
 class HomeController extends GetxController {
   Restaurant restaurant = Restaurant();
   List<Category> categories = [];
-  List<Meal> meals = [];
   RxBool isLoading = false.obs;
+  List<Meal> meals = [];
+  
   @override
   void onInit() {
     getData();
@@ -49,5 +50,28 @@ class HomeController extends GetxController {
   goToAddMenu() async {
     await Get.toNamed(Routes.ADD_MENU);
     getData();
+  }
+
+  // Categoría a partir de un category id
+  setCategory(String categoryId) {
+    switch (categoryId) {
+      case 'beverage':
+        return 'Bebida';
+
+      case 'dessert':
+        return 'Postre';
+
+      case 'entree':
+        return 'Plato fuerte';
+
+      case 'side':
+        return 'Acompañamiento';
+
+      case 'starter':
+        return 'Entrada';
+
+      default:
+        return '';
+    }
   }
 }

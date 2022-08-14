@@ -27,6 +27,7 @@ class RegisterController extends GetxController {
   final box = GetStorage();
   RxBool error = false.obs;
   File? profilePicture;
+  
 
   String? validatePhone(String? _) {
     if (phoneController.text.isEmpty) {

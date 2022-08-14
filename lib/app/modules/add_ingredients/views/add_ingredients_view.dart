@@ -204,8 +204,6 @@ class IngredientContainer extends StatelessWidget {
               ingredient.amountMeasure =
                   ingredient.amountMeasureController!.text;
             },
-            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-            keyboardType: TextInputType.number,
           ),
           Obx(() => Row(
                 children: [
