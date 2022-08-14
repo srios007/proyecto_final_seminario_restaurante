@@ -1,8 +1,8 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:proyecto_final_seminario_restaurante/app/models/meal_model.dart';
 import 'package:proyecto_final_seminario_restaurante/app/modules/home/widgets/custom_drawer.dart';
-import 'package:proyecto_final_seminario_restaurante/app/utils/utils.dart';
 import 'package:proyecto_final_seminario_restaurante/app/widgets/purple_button.dart';
+import 'package:proyecto_final_seminario_restaurante/app/models/meal_model.dart';
+import 'package:proyecto_final_seminario_restaurante/app/utils/utils.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import '../controllers/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
