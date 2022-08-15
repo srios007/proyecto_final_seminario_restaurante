@@ -6,6 +6,7 @@ import 'package:proyecto_final_seminario_restaurante/app/services/services.dart'
 
 class ProfileController extends GetxController {
   HomeController homeController = Get.find();
+  RxBool isLoading = false.obs;
 
   logOut() async {
     await auth.signOut();

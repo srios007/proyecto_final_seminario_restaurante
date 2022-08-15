@@ -269,32 +269,3 @@ class Coordinates {
   }
 }
 
-class UserLocation {
-  String? address;
-  String? additionalInfo;
-  double? latitude;
-  double? longitude;
-
-  UserLocation({
-    this.address,
-    this.additionalInfo,
-    this.latitude,
-    this.longitude,
-  });
-
-  UserLocation.fromJson(Map<String, dynamic> json) {
-    address = json['address'];
-    additionalInfo = json['additionalInfo'];
-    latitude = json['latitude'];
-    longitude = json['longitude'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final data = <String, dynamic>{};
-    data['address'] = address;
-    data['additionalInfo'] = additionalInfo;
-    data['latitude'] = latitude;
-    data['longitude'] = longitude;
-    return data;
-  }
-}

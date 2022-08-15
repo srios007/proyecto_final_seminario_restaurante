@@ -87,7 +87,11 @@ class Styles {
     fontSize: 24,
     color: Palette.darkBlue,
   );
-
+  TextStyle editProfile = const TextStyle(
+    fontWeight: FontWeight.w700,
+    fontSize: 18,
+    color: Palette.lightBlue,
+  );
   TextStyle nameProfile = const TextStyle(
     fontWeight: FontWeight.w500,
     fontSize: 20,
