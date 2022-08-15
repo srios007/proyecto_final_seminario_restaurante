@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../models/meal_model.dart';
+import '../../models/menu_model.dart';
 import '../../utils/references.dart';
 
 class Database {
@@ -647,7 +648,6 @@ class Database {
     }
   }
 
-  /// Crea una oferta en Firebase correspondiente a un PRODUCTO
   Future<bool> saveMealanIngredients(
       {required Meal meal,
       required String collection,
@@ -676,6 +676,28 @@ class Database {
     } on Exception catch (e) {
       print(e);
       return false;
+    }
+  }
+
+  Future<String> saveMenu({
+    required Menu menu,
+    required String collection,
+    required String customId,
+  }) async {
+    try {
+      CollectionReference collRef = firestore.collection(collection);
+      DocumentReference docReferance = collRef.doc(customId);
+
+      await firestore
+          .collection(collection)
+          .doc(docReferance.id)
+          .set({...menu.toJson(), 'id': docReferance.id});
+ 
+
+      return docReferance.id;
+    } on Exception catch (e) {
+      print(e);
+      return '';
     }
   }
 

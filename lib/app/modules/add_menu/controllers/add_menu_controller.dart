@@ -1,7 +1,7 @@
-
 import 'package:proyecto_final_seminario_restaurante/app/modules/home/controllers/home_controller.dart';
 import 'package:proyecto_final_seminario_restaurante/app/services/model_services/meal_service.dart';
 import 'package:proyecto_final_seminario_restaurante/app/widgets/snackbars.dart';
+import '../../../models/menu_model.dart';
 import '../../../services/firebase_services/storage_service.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:image_picker/image_picker.dart';
@@ -13,7 +13,10 @@ import 'package:get/get.dart';
 import 'dart:math';
 import 'dart:io';
 
+import '../../../services/model_services/menu_service.dart';
+
 class AddMenuController extends GetxController {
+  TextEditingController nameController = TextEditingController();
   HomeController homeController = Get.find();
   final ImagePicker _picker = ImagePicker();
   final key = GlobalKey<FormState>();
@@ -86,8 +89,16 @@ class AddMenuController extends GetxController {
         );
       } else {
         isLoadingMenu.value = true;
+        Menu menu = Menu(
+          name: nameController.text,
+        );
+        String menuId = await menuService.createMenu(
+          menu: menu,
+          restaurantId: homeController.restaurant.id,
+        );
         for (var category in categoriesMenu) {
           for (var meal in category.meals) {
+            meal.menuId = menuId;
             var rng = Random();
             meal.pictureUrl = await storageService.uploadFile(
               homeController.restaurant.id!,

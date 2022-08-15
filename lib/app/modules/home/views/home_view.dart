@@ -1,3 +1,4 @@
+import 'package:proyecto_final_seminario_restaurante/app/models/menu_model.dart';
 import 'package:proyecto_final_seminario_restaurante/app/modules/home/widgets/custom_drawer.dart';
 import 'package:proyecto_final_seminario_restaurante/app/widgets/purple_button.dart';
 import 'package:proyecto_final_seminario_restaurante/app/models/meal_model.dart';
@@ -52,6 +53,42 @@ class HomeView extends GetView<HomeController> {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20),
                           child: Text(
+                            'Mis menús',
+                            style: styles.titleOffer,
+                          ),
+                        ),
+                        const SizedBox(height: 15),
+                        controller.menus.isEmpty
+                            ? Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 20),
+                                child: Text(
+                                  'No tienes menús aún',
+                                  style: styles.purpleboldStyle,
+                                ),
+                              )
+                            : Container(
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 10),
+                                width: Get.width,
+                                height: 70,
+                                child: ListView.builder(
+                                  physics: const ClampingScrollPhysics(),
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: controller.menus.length,
+                                  itemBuilder: (context, index) {
+                                    var menu = controller.menus[index];
+                                    return MenuContainer(
+                                      menu: menu,
+                                      controller: controller,
+                                    );
+                                  },
+                                ),
+                              ),
+                        const SizedBox(height: 15),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: Text(
                             'Mis platillos',
                             style: styles.titleOffer,
                           ),
@@ -63,10 +100,12 @@ class HomeView extends GetView<HomeController> {
                                     const EdgeInsets.symmetric(horizontal: 20),
                                 child: Text(
                                   'No tienes platillos aún',
-                                  style: styles.titleOffer,
+                                  style: styles.purpleboldStyle,
                                 ),
                               )
-                            : SizedBox(
+                            : Container(
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 10),
                                 width: Get.width,
                                 height: 250,
                                 child: ListView.builder(
@@ -89,11 +128,6 @@ class HomeView extends GetView<HomeController> {
                               style: styles.titleOffer),
                         ),
                         const SizedBox(height: 30),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: Text('Historial de órdenes',
-                              style: styles.titleOffer),
-                        ),
                         const Spacer(),
                         Padding(
                           padding: const EdgeInsets.symmetric(
@@ -213,6 +247,57 @@ class MealContainer extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 20),
+        ],
+      ),
+    );
+  }
+}
+
+class MenuContainer extends StatelessWidget {
+  MenuContainer({
+    Key? key,
+    required this.menu,
+    required this.controller,
+  }) : super(key: key);
+
+  final Menu menu;
+  HomeController controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      height: 100,
+      width: 170,
+      decoration: ShapeDecoration.fromBoxDecoration(
+        BoxDecoration(
+          color: Palette.white,
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: const [
+            BoxShadow(
+              color: Color.fromARGB(255, 209, 208, 208),
+              offset: Offset(4.0, 4.0),
+              blurRadius: 8.0,
+            ),
+          ],
+        ),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 10),
+            child: Text(
+              '${menu.name}',
+              style: const TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w700,
+                color: Palette.purple,
+              ),
+              textAlign: TextAlign.center,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
         ],
       ),
     );

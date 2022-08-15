@@ -100,6 +100,12 @@ class AddMenuView extends GetView<AddMenuController> {
               ),
             ),
             SliverToBoxAdapter(
+              child: NormalInput(
+                hintText: 'Nombre del menú',
+                textEditingController: controller.nameController,
+              ),
+            ),
+            SliverToBoxAdapter(
               child: Obx(
                 () {
                   return controller.categoriesMenu.isNotEmpty
