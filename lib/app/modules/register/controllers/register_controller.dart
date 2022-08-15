@@ -27,7 +27,6 @@ class RegisterController extends GetxController {
   final box = GetStorage();
   RxBool error = false.obs;
   File? profilePicture;
-  
 
   String? validatePhone(String? _) {
     if (phoneController.text.isEmpty) {
@@ -129,7 +128,7 @@ class RegisterController extends GetxController {
         } else {
           if (profilePicture != null) {
             var urlRutResult = await storageService.uploadFile(
-              signUpResult.user.uid,
+              signUpResult.restaurant.uid,
               'FotoPerfil',
               profilePicture!,
             );
@@ -137,10 +136,10 @@ class RegisterController extends GetxController {
           } else {
             restaurant.profilePictureUrl = '';
           }
-          restaurant.id = signUpResult.user.uid;
+          restaurant.id = signUpResult.restaurant.uid;
           await restaurantService.save(
             restaurant: restaurant,
-            customId: signUpResult.user.uid,
+            customId: signUpResult.restaurant.uid,
           );
           Get.offAllNamed(Routes.HOME);
         }

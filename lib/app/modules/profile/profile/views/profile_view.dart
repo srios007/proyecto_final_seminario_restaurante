@@ -133,6 +133,38 @@ class ProfileView extends GetView<ProfileController> {
                                       'Sin dirección',
                               style: styles.profileLabelStyle,
                             ),
+                            const SizedBox(height: 20),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Cuenta bancaria',
+                                  style: styles.titleOffer,
+                                ),
+                                GestureDetector(
+                                  onTap: () async {
+                                    controller.isLoading.value = true;
+                                    await Get.toNamed(Routes.ADD_BANK_ACCOUNT);
+                                    controller.isLoading.value = false;
+                                  },
+                                  child: Text(
+                                    'Editar',
+                                    style: styles.editProfile,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 5),
+                            Text(
+                              controller.homeController.restaurant
+                                          .bankAccount ==
+                                      null
+                                  ? 'Sin cuenta'
+                                  : controller.homeController.restaurant
+                                          .bankAccount!.number ??
+                                      'Sin cuenta',
+                              style: styles.profileLabelStyle,
+                            ),
                           ],
                         ),
                       ),

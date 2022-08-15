@@ -1,7 +1,5 @@
 import 'package:get/get.dart';
 
-import '../modules/add_bank_account/bindings/add_bank_account_binding.dart';
-import '../modules/add_bank_account/views/add_bank_account_view.dart';
 import '../modules/add_ingredients/bindings/add_ingredients_binding.dart';
 import '../modules/add_ingredients/views/add_ingredients_view.dart';
 import '../modules/add_menu/bindings/add_menu_binding.dart';
@@ -16,6 +14,8 @@ import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
 import '../modules/profile/add_address/bindings/add_address_binding.dart';
 import '../modules/profile/add_address/views/add_address_view.dart';
+import '../modules/profile/add_bank_account/bindings/add_bank_account_binding.dart';
+import '../modules/profile/add_bank_account/views/add_bank_account_view.dart';
 import '../modules/profile/profile/bindings/profile_binding.dart';
 import '../modules/profile/profile/views/profile_view.dart';
 import '../modules/register/bindings/register_binding.dart';

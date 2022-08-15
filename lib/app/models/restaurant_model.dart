@@ -32,9 +32,9 @@ class Restaurant {
         : null;
     userType = json['userType'];
     restaurantName = json['restaurantName'];
-    address = json['addresses'] != null
+    address = json['address'] != null
         ? Address.fromJson(
-            json['addresses'],
+            json['address'],
           )
         : null;
     bankAccount = json['bankAccount'] != null
