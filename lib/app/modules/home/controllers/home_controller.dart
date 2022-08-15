@@ -64,6 +64,13 @@ class HomeController extends GetxController {
     getData();
   }
 
+  /// Ir a detalle de  menú
+  goToMenu(Menu menu) async {
+    await Get.toNamed(Routes.MENU_DETAIL, arguments: {
+      'menu': menu,
+    });
+  }
+
   /// Categoría a partir de un category id
   setCategory(String categoryId) {
     switch (categoryId) {

@@ -12,6 +12,8 @@ import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
+import '../modules/menu_detail/bindings/menu_detail_binding.dart';
+import '../modules/menu_detail/views/menu_detail_view.dart';
 import '../modules/profile/add_address/bindings/add_address_binding.dart';
 import '../modules/profile/add_address/views/add_address_view.dart';
 import '../modules/profile/add_bank_account/bindings/add_bank_account_binding.dart';
@@ -78,13 +80,18 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.ADD_ADDRESS,
-      page: () =>   AddAddressView(),
+      page: () => AddAddressView(),
       binding: AddAddressBinding(),
     ),
     GetPage(
       name: _Paths.ADD_BANK_ACCOUNT,
       page: () => const AddBankAccountView(),
       binding: AddBankAccountBinding(),
+    ),
+    GetPage(
+      name: _Paths.MENU_DETAIL,
+      page: () => const MenuDetailView(),
+      binding: MenuDetailBinding(),
     ),
   ];
 }

@@ -79,6 +79,9 @@ class HomeView extends GetView<HomeController> {
                                   itemBuilder: (context, index) {
                                     var menu = controller.menus[index];
                                     return MenuContainer(
+                                      onTap: () {
+                                        controller.goToMenu(menu);
+                                      },
                                       menu: menu,
                                       controller: controller,
                                     );
@@ -258,47 +261,52 @@ class MenuContainer extends StatelessWidget {
     Key? key,
     required this.menu,
     required this.controller,
+    required this.onTap,
   }) : super(key: key);
 
   final Menu menu;
   HomeController controller;
+  void Function() onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-      height: 100,
-      width: 170,
-      decoration: ShapeDecoration.fromBoxDecoration(
-        BoxDecoration(
-          color: Palette.white,
-          borderRadius: BorderRadius.circular(20),
-          boxShadow: const [
-            BoxShadow(
-              color: Color.fromARGB(255, 209, 208, 208),
-              offset: Offset(4.0, 4.0),
-              blurRadius: 8.0,
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        height: 100,
+        width: 170,
+        decoration: ShapeDecoration.fromBoxDecoration(
+          BoxDecoration(
+            color: Palette.white,
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: const [
+              BoxShadow(
+                color: Color.fromARGB(255, 209, 208, 208),
+                offset: Offset(4.0, 4.0),
+                blurRadius: 8.0,
+              ),
+            ],
+          ),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 10),
+              child: Text(
+                '${menu.name}',
+                style: const TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w700,
+                  color: Palette.purple,
+                ),
+                textAlign: TextAlign.center,
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
           ],
         ),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: 10),
-            child: Text(
-              '${menu.name}',
-              style: const TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.w700,
-                color: Palette.purple,
-              ),
-              textAlign: TextAlign.center,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
-        ],
       ),
     );
   }

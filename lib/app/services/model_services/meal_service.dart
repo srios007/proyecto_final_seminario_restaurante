@@ -43,7 +43,26 @@ class MealService {
       return false;
     }
   }
-
+ Future<List<Meal>> getMealsByDocumentId(
+    String documentId,
+    String collection,
+    String param,
+  ) async {
+    connectionStatus.getNormalStatus();
+    List<Meal> meals = [];
+    var querySnapshot =
+        await database.getDataByCustonParam(documentId, collection, param);
+    if (querySnapshot.docs.isEmpty) return [];
+    for (var element in querySnapshot.docs) {
+      Meal meal = Meal.fromJson(
+        (element.data() as Map<String, dynamic>),
+      );
+      meal.ingredients = [].obs;
+      meal.id = element.id;
+      meals.add(meal);
+    }
+    return meals;
+  }
   Future<List<Meal>> getMeals(
     String documentId,
     String collection,
