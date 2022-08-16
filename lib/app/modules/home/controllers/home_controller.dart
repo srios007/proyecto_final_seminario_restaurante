@@ -1,17 +1,17 @@
 import 'package:proyecto_final_seminario_restaurante/app/services/model_services/category_service.dart';
 import 'package:proyecto_final_seminario_restaurante/app/services/model_services/meal_service.dart';
 import 'package:proyecto_final_seminario_restaurante/app/services/model_services/menu_service.dart';
-import 'package:proyecto_final_seminario_restaurante/app/models/restaurant_model.dart';
-import 'package:proyecto_final_seminario_restaurante/app/models/category_model.dart';
-import 'package:proyecto_final_seminario_restaurante/app/models/menu_model.dart';
 import 'package:proyecto_final_seminario_restaurante/app/services/services.dart';
-import 'package:proyecto_final_seminario_restaurante/app/models/meal_model.dart';
 import 'package:proyecto_final_seminario_restaurante/app/routes/app_pages.dart';
+import '../../../models/models.dart';
 import 'package:get/get.dart';
+
+import '../../../services/firebase_services/database_service.dart';
 
 class HomeController extends GetxController {
   Restaurant restaurant = Restaurant();
   List<Category> categories = [];
+  List<Purchase> purchases = [];
   RxBool isLoading = false.obs;
   List<Meal> meals = [];
   List<Menu> menus = [];
@@ -28,6 +28,7 @@ class HomeController extends GetxController {
     await getCategories();
     await getMeals();
     await getMenus();
+    await getPurchases();
     isLoading.value = false;
   }
 
@@ -71,6 +72,41 @@ class HomeController extends GetxController {
     });
   }
 
+  /// Trae los purchases del usuario
+  getPurchases() async {
+    database
+        .getOrderedSubcollectionSnapshotWithCondition(
+      collection: 'purchases',
+      orderProperty: 'created',
+      whereProperty: 'restaurantId',
+      equal: restaurant.id!,
+      desc: true,
+      limit: 100,
+    )
+        .listen((event) async {
+      if (event.docs.isEmpty) {
+        purchases = [];
+      } else {
+        isLoading.value = true;
+        purchases = [];
+        for (var element in event.docs) {
+          Purchase purchase =
+              Purchase.fromJson(element.data() as Map<String, dynamic>);
+          purchases.add(purchase);
+        }
+        for (var element in purchases) {
+          element.restaurant = await restaurantService
+              .getUserDocumentById(element.restaurantId!);
+          List<Meal> aux = await mealService.getMealsByDocumentId(
+              element.mealId!, 'meals', 'id');
+          element.meal = aux[0];
+        }
+        print('nuevo purchase');
+        isLoading.value = false;
+      }
+    });
+  }
+
   /// Categoría a partir de un category id
   setCategory(String categoryId) {
     switch (categoryId) {
@@ -91,6 +127,17 @@ class HomeController extends GetxController {
 
       default:
         return '';
+    }
+  }
+
+  /// Estado a partir del purchase
+  setState(State state) {
+    if (state.isPreparing! && !state.isDelivered! && !state.isInRoute!) {
+      return 'En preparación';
+    } else if (state.isPreparing! && !state.isDelivered! && state.isInRoute!) {
+      return 'En camino';
+    } else {
+      return 'Entregado';
     }
   }
 }

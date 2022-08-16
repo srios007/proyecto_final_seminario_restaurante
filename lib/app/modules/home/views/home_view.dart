@@ -1,11 +1,10 @@
-import 'package:proyecto_final_seminario_restaurante/app/models/menu_model.dart';
 import 'package:proyecto_final_seminario_restaurante/app/modules/home/widgets/custom_drawer.dart';
 import 'package:proyecto_final_seminario_restaurante/app/widgets/purple_button.dart';
-import 'package:proyecto_final_seminario_restaurante/app/models/meal_model.dart';
 import 'package:proyecto_final_seminario_restaurante/app/utils/utils.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import '../controllers/home_controller.dart';
 import 'package:flutter/material.dart';
+import '../../../models/models.dart';
 import 'package:get/get.dart';
 
 class HomeView extends GetView<HomeController> {
@@ -127,9 +126,37 @@ class HomeView extends GetView<HomeController> {
                         const SizedBox(height: 15),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: Text('Mis órdenes activas',
+                          child: Text('Mis órdenes',
                               style: styles.titleOffer),
                         ),
+                               const SizedBox(height: 15),
+                        controller.purchases.isEmpty
+                            ? Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 20),
+                                child: Text(
+                                  'No tienes órdenes aún',
+                                  style: styles.purpleboldStyle,
+                                ),
+                              )
+                            : Container(
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 10),
+                                width: Get.width,
+                                height: 250,
+                                child: ListView.builder(
+                                  physics: const ClampingScrollPhysics(),
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: controller.purchases.length,
+                                  itemBuilder: (context, index) {
+                                    var purchase = controller.purchases[index];
+                                    return PurchaseContainer(
+                                      purchase: purchase,
+                                      controller: controller,
+                                    );
+                                  },
+                                ),
+                              ),
                         const SizedBox(height: 30),
                         const Spacer(),
                         Padding(
@@ -307,6 +334,106 @@ class MenuContainer extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+class PurchaseContainer extends StatelessWidget {
+  PurchaseContainer({
+    Key? key,
+    required this.purchase,
+    required this.controller,
+  }) : super(key: key);
+
+  final Purchase purchase;
+  HomeController controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      height: 100,
+      width: 170,
+      decoration: ShapeDecoration.fromBoxDecoration(
+        BoxDecoration(
+          color: Palette.white,
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: const [
+            BoxShadow(
+              color: Color.fromARGB(255, 209, 208, 208),
+              offset: Offset(4.0, 4.0),
+              blurRadius: 8.0,
+            ),
+          ],
+        ),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          const SizedBox(height: 20),
+          SizedBox(
+            height: 130,
+            width: 130,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: CachedNetworkImage(
+                fit: BoxFit.fill,
+                imageUrl: purchase.meal!.pictureUrl!,
+                progressIndicatorBuilder: (context, url, downloadProgress) =>
+                    Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: CircularProgressIndicator(
+                    value: downloadProgress.progress,
+                  ),
+                ),
+                errorWidget: (context, url, error) => const Icon(Icons.error),
+              ),
+            ),
+          ),
+          const SizedBox(height: 10),
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 10),
+            child: Text(
+              '${purchase.meal!.name}',
+              style: const TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w700,
+                color: Palette.purple,
+              ),
+              textAlign: TextAlign.center,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 10),
+            child: Text(
+              'Estado: ${controller.setState(purchase.state!)}',
+              style: const TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w700,
+                color: Palette.purple,
+              ),
+              textAlign: TextAlign.center,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 10),
+            child: Text(
+              'Total: ${currencyFormat.format(
+                    purchase.prices!.total,
+                  ).replaceAll(',', '.')}',
+              style: const TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w700,
+                color: Palette.purple,
+              ),
+              textAlign: TextAlign.center,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+          const SizedBox(height: 20),
+        ],
       ),
     );
   }
