@@ -1,31 +1,42 @@
-import 'package:get/get.dart';
 
+import 'models.dart';
 
 class CartItem {
-  DateTime? initDate;
-  DateTime? endDate;
-
+  Meal? meal;
+  DateTime? created;
+  Prices? price;
 
   CartItem({
-    this.initDate,
-    this.endDate,
+    this.meal,
+    this.created,
+    this.price,
   });
 }
 
 class Prices {
   double price = 0;
-  double comission = 0;
   double deliveryCost = 0;
   double total = 0;
-  double taxes = 0;
-  double insurance = 0;
 
   Prices({
     required this.price,
-    required this.comission,
     required this.deliveryCost,
     required this.total,
-    required this.taxes,
-    required this.insurance,
   });
+
+    Prices.fromJson(Map<String, dynamic> json) {
+    price = json['price'];
+    deliveryCost = json['deliveryCost'] ;
+    total = json['total'];
+ 
+  }
+
+  Map<String, dynamic> toJson() {
+    final data = <String, dynamic>{};
+    data['price'] = price;
+    data['deliveryCost'] = deliveryCost;
+    data['total'] = total;
+ 
+    return data;
+  }
 }

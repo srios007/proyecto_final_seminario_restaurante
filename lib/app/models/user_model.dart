@@ -1,25 +1,27 @@
 import 'package:get/get.dart';
 
-class Client {
+class User {
   String? id;
   DateTime? created;
   String? profilePictureUrl;
   ContactInfo? contactInfo;
   String? userType;
   String? password;
-  List<BankAccount> bankAccounts = [];
-  List<Address> addresses = [];
+  CreditCard? creditCard;
+  Address? address;
 
-  Client({
+  User({
     this.id,
     this.created,
     this.profilePictureUrl,
     this.contactInfo,
     this.userType,
     this.password,
+    this.creditCard,
+    this.address,
   });
 
-  Client.fromJson(Map<String, dynamic> json) {
+  User.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     created = json["created"].toDate();
     profilePictureUrl = json['profilePictureUrl'];
@@ -27,6 +29,16 @@ class Client {
         ? ContactInfo?.fromJson(json['contactInfo'])
         : null;
     userType = json['userType'];
+    address = json['address'] != null
+        ? Address.fromJson(
+            json['address'],
+          )
+        : null;
+    creditCard = json['creditCard'] != null
+        ? CreditCard.fromJson(
+            json['creditCard'],
+          )
+        : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -38,28 +50,30 @@ class Client {
       data['contactInfo'] = contactInfo?.toJson();
     }
     data['userType'] = userType;
+    if (address != null) {
+      data['address'] = address?.toJson();
+    }
+    if (creditCard != null) {
+      data['creditCard'] = creditCard?.toJson();
+    }
     return data;
   }
 }
 
 class ContactInfo {
-  String? name;
-  String? lastName;
   String? email;
+  String? fullName;
   PhoneNumber? phoneNumber;
 
   ContactInfo({
-    this.name,
-    this.lastName,
     this.email,
+    this.fullName,
     this.phoneNumber,
   });
 
   ContactInfo.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
-    lastName = json['lastName'];
     email = json['email'];
-
+    fullName = json['fullName'];
     phoneNumber = json['phoneNumber'] != null
         ? PhoneNumber?.fromJson(json['phoneNumber'])
         : null;
@@ -67,9 +81,8 @@ class ContactInfo {
 
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
-    data['name'] = name;
-    data['lastName'] = lastName;
     data['email'] = email;
+    data['fullName'] = fullName;
     if (phoneNumber != null) {
       data['phoneNumber'] = phoneNumber?.toJson();
     }
@@ -132,108 +145,62 @@ class Contact {
   }
 }
 
-class BankAccount {
-  OwnerInfo? ownerInfo;
-  String? id;
-  String? bank;
-  String? type;
-  String? number;
-
-  BankAccount({this.ownerInfo, this.bank, this.type, this.number});
-
-  BankAccount.fromJson(Map<String, dynamic> json) {
-    ownerInfo = json['ownerInfo'] != null
-        ? OwnerInfo?.fromJson(json['ownerInfo'])
-        : null;
-    bank = json['bank'];
-    type = json['type'];
-    number = json['number'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final data = <String, dynamic>{};
-    data['id'] = id;
-    if (ownerInfo != null) {
-      data['ownerInfo'] = ownerInfo?.toJson();
-    }
-    data['bank'] = bank;
-    data['type'] = type;
-    data['number'] = number;
-    return data;
-  }
-}
-
-class OwnerInfo {
-  String? name;
-  String? documentId;
-  String? typeId;
-
-  OwnerInfo({this.name, this.documentId, this.typeId});
-
-  OwnerInfo.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
-    documentId = json['documentId'];
-    typeId = json['typeId'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final data = <String, dynamic>{};
-    data['name'] = name;
-    data['documentId'] = documentId;
-    data['typeId'] = typeId;
-    return data;
-  }
-}
-
 class CreditCard {
-  String? id;
-  String? lastFourDigits;
-  int? paymentSourceId;
+  String? cardNumber;
+  String? month;
+  String? year;
+  int? cvv;
   String? type;
+  String? ownerName;
+  String? ownerDocumentId;
 
-  CreditCard({this.lastFourDigits, this.paymentSourceId, this.type});
+  CreditCard({
+    this.cardNumber,
+    this.month,
+    this.year,
+    this.cvv,
+    this.type,
+    this.ownerName,
+    this.ownerDocumentId,
+  });
 
   CreditCard.fromJson(Map<String, dynamic> json) {
-    lastFourDigits = json['lastFourDigits'];
-    paymentSourceId = json['paymentSourceId'];
+    cardNumber = json['cardNumber'];
+    month = json['month'];
+    year = json['year'];
+    cvv = json['cvv'];
     type = json['type'];
+    ownerName = json['ownerName'];
+    ownerDocumentId = json['ownerDocumentId'];
   }
 
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
-    data['lastFourDigits'] = lastFourDigits;
-    data['paymentSourceId'] = paymentSourceId;
+    data['cardNumber'] = cardNumber;
+    data['month'] = month;
+    data['year'] = year;
+    data['cvv'] = cvv;
     data['type'] = type;
-    data['id'] = id;
+    data['ownerName'] = ownerName;
+    data['ownerDocumentId'] = ownerDocumentId;
     return data;
   }
 }
 
 class Address {
-  String? id;
   String? name;
   String? additionalInfo;
-  bool? isMainAddress;
-  RxBool? isSelected = false.obs;
-  Coordinates? coordinates;
   String? address;
 
   Address({
     this.name,
     this.additionalInfo,
-    this.isMainAddress,
-    this.isSelected,
-    this.coordinates,
     this.address,
   });
 
   Address.fromJson(Map<String, dynamic> json) {
     name = json['name'];
     additionalInfo = json['additionalInfo'];
-    isMainAddress = json['isMainAddress'];
-    coordinates = json['coordinates'] != null
-        ? Coordinates?.fromJson(json['coordinates'])
-        : null;
     address = json['address'];
   }
 
@@ -241,31 +208,36 @@ class Address {
     final data = <String, dynamic>{};
     data['name'] = name;
     data['additionalInfo'] = additionalInfo;
-    data['isMainAddress'] = isMainAddress;
-    if (coordinates != null) {
-      data['coordinates'] = coordinates?.toJson();
-    }
     data['address'] = address;
     return data;
   }
 }
+class UserLocation {
+  String? address;
+  String? additionalInfo;
+  double? latitude;
+  double? longitude;
 
-class Coordinates {
-  String? lat;
-  String? lng;
+  UserLocation({
+    this.address,
+    this.additionalInfo,
+    this.latitude,
+    this.longitude,
+  });
 
-  Coordinates({this.lat, this.lng});
-
-  Coordinates.fromJson(Map<String, dynamic> json) {
-    lat = json['lat'];
-    lng = json['lng'];
+  UserLocation.fromJson(Map<String, dynamic> json) {
+    address = json['address'];
+    additionalInfo = json['additionalInfo'];
+    latitude = json['latitude'];
+    longitude = json['longitude'];
   }
 
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
-    data['lat'] = lat;
-    data['lng'] = lng;
+    data['address'] = address;
+    data['additionalInfo'] = additionalInfo;
+    data['latitude'] = latitude;
+    data['longitude'] = longitude;
     return data;
   }
 }
-

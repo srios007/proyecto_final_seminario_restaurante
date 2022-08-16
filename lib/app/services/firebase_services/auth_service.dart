@@ -4,7 +4,7 @@ import 'package:proyecto_final_seminario_restaurante/app/models/restaurant_model
 import 'package:proyecto_final_seminario_restaurante/app/utils/utils.dart';
 import 'package:proyecto_final_seminario_restaurante/app/widgets/widgets.dart';
 import '../model_services/restaurant_service.dart';
-import '../../models/client_model.dart' as projectUser;
+import '../../models/user_model.dart' as projectUser;
 import 'database_service.dart';
 
 class AuthService {

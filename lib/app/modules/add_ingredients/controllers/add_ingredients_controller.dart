@@ -1,9 +1,8 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:proyecto_final_seminario_restaurante/app/models/ingredient.dart';
 import 'package:proyecto_final_seminario_restaurante/app/widgets/widgets.dart';
 
-import '../../../models/meal_model.dart';
+import '../../../models/models.dart';
 
 class AddIngredientsController extends GetxController {
   final key = GlobalKey<FormState>();

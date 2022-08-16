@@ -1,8 +1,8 @@
 import 'package:proyecto_final_seminario_restaurante/app/widgets/add_menu_input.dart';
 import 'package:proyecto_final_seminario_restaurante/app/widgets/widgets.dart';
 import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
+import '../../../models/models.dart';
 import '../controllers/add_ingredients_controller.dart';
-import '../../../models/ingredient.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
