@@ -352,8 +352,8 @@ class PurchaseContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Get.toNamed(Routes.ORDER_DETAIL, arguments: {
+      onTap: () async {
+        await Get.toNamed(Routes.ORDER_DETAIL, arguments: {
           'purchase': purchase,
         });
       },

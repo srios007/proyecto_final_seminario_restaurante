@@ -152,6 +152,10 @@ class Database {
       return '';
     }
   }
+  /// Actualiza un documento ([data] debe ir en formato json {})
+  Future updateDocument(documentID, data, collection) {
+    return firestore.doc('$collection/$documentID').update(data);
+  }
 }
 
 final Database database = Database();
