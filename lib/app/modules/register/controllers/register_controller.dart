@@ -128,7 +128,7 @@ class RegisterController extends GetxController {
         } else {
           if (profilePicture != null) {
             var urlRutResult = await storageService.uploadFile(
-              signUpResult.restaurant.uid,
+              signUpResult.user.uid,
               'FotoPerfil',
               profilePicture!,
             );
@@ -136,10 +136,10 @@ class RegisterController extends GetxController {
           } else {
             restaurant.profilePictureUrl = '';
           }
-          restaurant.id = signUpResult.restaurant.uid;
+          restaurant.id = signUpResult.user.uid;
           await restaurantService.save(
             restaurant: restaurant,
-            customId: signUpResult.restaurant.uid,
+            customId: signUpResult.user.uid,
           );
           Get.offAllNamed(Routes.HOME);
         }
