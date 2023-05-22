@@ -110,7 +110,7 @@ class _DotsIndicatorTour extends StatelessWidget {
         padding: const EdgeInsets.only(bottom: 10),
         child: DotsIndicator(
           dotsCount: 4,
-          position: controller.currentIndexPage.value,
+          position: controller.currentIndexPage.value.toInt(),
           decorator: DotsDecorator(
             size: const Size.square(15.0),
             activeColor: Palette.purple,
